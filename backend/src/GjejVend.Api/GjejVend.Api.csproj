@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GjejVend.Application\GjejVend.Application.csproj" />
+    <ProjectReference Include="..\GjejVend.Infrastructure\GjejVend.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
