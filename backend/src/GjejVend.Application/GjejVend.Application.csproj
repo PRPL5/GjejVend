@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GjejVend.Domain\GjejVend.Domain.csproj" />
+    <ProjectReference Include="..\GjejVend.Infrastructure\GjejVend.Infrastructure.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

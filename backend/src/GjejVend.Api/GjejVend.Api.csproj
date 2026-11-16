@@ -8,8 +8,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GjejVend.Application\GjejVend.Application.csproj" />
-    <ProjectReference Include="..\GjejVend.Infrastructure\GjejVend.Infrastructure.csproj" />
-  </ItemGroup>
+    <ProjectReference Include="..\GjejVend.Application\GjejVend.Application.csproj" />  </ItemGroup>
 
 </Project>
