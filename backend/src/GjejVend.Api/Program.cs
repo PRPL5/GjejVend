@@ -1,3 +1,4 @@
+using GjejVend.Api.Authentication;
 using GjejVend.Application;
 
 DotNetEnv.Env.TraversePath().NoClobber().Load();
@@ -8,7 +9,12 @@ var connectionString = builder.Configuration.GetConnectionString("Default")
     ?? throw new InvalidOperationException(
         "Connection string 'Default' is missing. Set ConnectionStrings__Default in backend/.env (see backend/.env.example).");
 
+var supabaseUrl = builder.Configuration["Supabase:Url"]
+    ?? throw new InvalidOperationException(
+        "Supabase URL is missing. Set Supabase__Url in backend/.env (see backend/.env.example).");
+
 builder.Services.AddApplication(connectionString);
+builder.Services.AddSupabaseAuthentication(supabaseUrl);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -27,6 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -12,11 +12,20 @@ public sealed class DatabaseFixture : IAsyncLifetime
     public async Task InitializeAsync()
     {
         await _container.StartAsync();
-        var options = new DbContextOptionsBuilder<GjejVendDbContext>()
-            .UseNpgsql(_container.GetConnectionString(), npgsql => npgsql.MigrationsHistoryTable("__EFMigrationsHistory", "private"))
-            .Options;
-        await using var context = new GjejVendDbContext(options);
+        await using var context = CreateContext();
         await context.Database.MigrateAsync();
+    }
+
+    public GjejVendDbContext CreateContext(ICurrentUser? currentUser = null)
+    {
+        var options = new DbContextOptionsBuilder<GjejVendDbContext>()
+            .UseNpgsql(_container.GetConnectionString(), npgsql => npgsql.MigrationsHistoryTable("__EFMigrationsHistory", "private"));
+        if (currentUser is not null)
+        {
+            options.AddInterceptors(new ActorConnectionInterceptor(currentUser));
+        }
+
+        return new GjejVendDbContext(options.Options);
     }
 
     public Task DisposeAsync() => _container.DisposeAsync().AsTask();
