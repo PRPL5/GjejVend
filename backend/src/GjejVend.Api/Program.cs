@@ -1,5 +1,14 @@
+using GjejVend.Application;
+
+DotNetEnv.Env.TraversePath().NoClobber().Load();
+
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("Default")
+    ?? throw new InvalidOperationException(
+        "Connection string 'Default' is missing. Set ConnectionStrings__Default in backend/.env (see backend/.env.example).");
+
+builder.Services.AddApplication(connectionString);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -5,7 +5,8 @@
     <ProjectReference Include="..\GjejVend.Infrastructure\GjejVend.Infrastructure.csproj" />
   </ItemGroup>
 
-  <PropertyGroup>
-  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
 
 </Project>
