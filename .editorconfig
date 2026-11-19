@@ -13,3 +13,6 @@ indent_size = 2
 
 [*.cs]
 csharp_style_namespace_declarations = file_scoped:warning
+
+[backend/src/GjejVend.Infrastructure/Persistence/Migrations/*.cs]
+generated_code = true
