@@ -19,6 +19,14 @@ public static class DependencyInjection
         services.AddScoped<ICommissionService, CommissionService>();
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IPaymentWebhookService, PaymentWebhookService>();
+
+        // Refund policies (Strategy). The active one is chosen by the refund_policy platform setting.
+        services.AddSingleton<IRefundPolicy, TimeBasedRefundPolicy>();
+        services.AddSingleton<IRefundPolicy, FullRefundPolicy>();
+        services.AddSingleton<IRefundPolicy, NoRefundPolicy>();
+        services.AddScoped<IRefundPolicyResolver, RefundPolicyResolver>();
+        services.AddScoped<IRefundService, RefundService>();
+        services.AddScoped<IEarningsService, EarningsService>();
         return services;
     }
 }

@@ -16,6 +16,7 @@ public interface IPaymentWebhookService
 public sealed class PaymentWebhookService(
     GjejVendDbContext db,
     IPaymentGateway gateway,
+    IRefundService refunds,
     TimeProvider clock,
     ILogger<PaymentWebhookService> logger) : IPaymentWebhookService
 {
@@ -42,10 +43,10 @@ public sealed class PaymentWebhookService(
     /// ledger from the payment status change. The conditional update makes duplicate and concurrent
     /// deliveries harmless: only the first one changes the row.
     /// </summary>
-    private Task ConfirmAsync(Payment payment, CancellationToken ct)
+    private async Task ConfirmAsync(Payment payment, CancellationToken ct)
     {
         var strategy = db.Database.CreateExecutionStrategy();
-        return strategy.ExecuteAsync(async () =>
+        var refundNeeded = await strategy.ExecuteAsync(async () =>
         {
             await using var transaction = await db.Database.BeginTransactionAsync(ct);
             var now = clock.GetUtcNow().UtcDateTime;
@@ -60,22 +61,24 @@ public sealed class PaymentWebhookService(
             if (updated == 0)
             {
                 await transaction.CommitAsync(ct); // already processed
-                return;
+                return false;
             }
 
             var confirmed = await db.Set<Booking>()
                 .Where(b => b.Id == payment.BookingId && b.Status == BookingStatus.Pending)
                 .ExecuteUpdateAsync(s => s.SetProperty(b => b.Status, BookingStatus.Confirmed), ct);
 
-            if (confirmed == 0)
-            {
-                // Paid after the booking expired or was cancelled. The refund flow handles this case.
-                logger.LogWarning("Payment {PaymentId} succeeded but booking {BookingId} is no longer pending",
-                    payment.Id, payment.BookingId);
-            }
-
             await transaction.CommitAsync(ct);
+            return confirmed == 0;
         });
+
+        if (refundNeeded)
+        {
+            // Paid after the booking expired or was cancelled: give the money back in full.
+            logger.LogWarning("Payment {PaymentId} succeeded but booking {BookingId} is no longer pending; refunding",
+                payment.Id, payment.BookingId);
+            await refunds.RefundInFullAsync(payment.Id, "Booking was no longer pending when payment completed", ct);
+        }
     }
 
     private async Task FailAsync(Payment payment, CancellationToken ct)
