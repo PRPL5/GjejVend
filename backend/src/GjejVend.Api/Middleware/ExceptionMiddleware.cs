@@ -33,7 +33,7 @@ public sealed class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionM
     private static Task Write(HttpContext ctx, int status, string title, string detail)
     {
         ctx.Response.StatusCode = status;
-        return ctx.Response.WriteAsJsonAsync(new ProblemDetails { Status = status, Title = title, Detail = detail },
-            contentType: "application/problem+json");
+        ctx.Response.ContentType = "application/problem+json";
+        return ctx.Response.WriteAsJsonAsync(new ProblemDetails { Status = status, Title = title, Detail = detail });
     }
 }
