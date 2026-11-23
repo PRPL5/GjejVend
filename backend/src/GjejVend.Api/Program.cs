@@ -14,7 +14,13 @@ var supabaseUrl = builder.Configuration["Supabase:Url"]
     ?? throw new InvalidOperationException(
         "Supabase URL is missing. Set Supabase__Url in backend/.env (see backend/.env.example).");
 
-builder.Services.AddApplication(connectionString);
+var webhookSecret = builder.Configuration["Payments:WebhookSecret"]
+    ?? (builder.Environment.IsDevelopment()
+        ? "dev-webhook-secret-change-me"
+        : throw new InvalidOperationException(
+            "Payments webhook secret is missing. Set Payments__WebhookSecret (see backend/.env.example)."));
+
+builder.Services.AddApplication(connectionString, webhookSecret);
 builder.Services.AddSupabaseAuthentication(supabaseUrl);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
