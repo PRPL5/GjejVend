@@ -1,4 +1,5 @@
 using GjejVend.Api.Authentication;
+using GjejVend.Api.Middleware;
 using GjejVend.Application;
 
 DotNetEnv.Env.TraversePath().NoClobber().Load();
@@ -25,6 +26,8 @@ builder.Services.AddCors(o => o.AddDefaultPolicy(p =>
     p.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod()));
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
