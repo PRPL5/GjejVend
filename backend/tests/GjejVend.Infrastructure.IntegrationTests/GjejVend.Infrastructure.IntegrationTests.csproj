@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\GjejVend.Infrastructure\GjejVend.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\GjejVend.Application\GjejVend.Application.csproj" />
   </ItemGroup>
 
 </Project>
