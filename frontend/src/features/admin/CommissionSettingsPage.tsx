@@ -12,9 +12,9 @@ export function parsePercent(input: string): number | null {
   return Math.round(value * 100) / 10_000
 }
 
-function CommissionForm({ rate }: { rate: number }) {
+// The mutation lives in the page: the form remounts when the saved rate comes back, which would drop its state.
+function CommissionForm({ rate, save }: { rate: number; save: ReturnType<typeof useSetCommissionRate> }) {
   const { t } = useTranslation()
-  const save = useSetCommissionRate()
   const [value, setValue] = useState(String(Math.round(rate * 10_000) / 100))
   const [invalid, setInvalid] = useState(false)
 
@@ -79,6 +79,7 @@ function RefundPolicyForm({ current, options }: { current: string; options: stri
 export function CommissionSettingsPage() {
   const { t } = useTranslation()
   const settings = useAdminSettings()
+  const saveCommission = useSetCommissionRate()
   const [now] = useState(() => new Date())
   const summary = useCommissionSummary(new Date(now.getTime() - 30 * 86_400_000).toISOString(), now.toISOString())
 
@@ -91,7 +92,7 @@ export function CommissionSettingsPage() {
       {settings.data ? (
         <Card>
           <div className="flex flex-col gap-6">
-            <CommissionForm key={settings.data.commissionRate} rate={settings.data.commissionRate ?? 0} />
+            <CommissionForm key={settings.data.commissionRate} rate={settings.data.commissionRate ?? 0} save={saveCommission} />
             <RefundPolicyForm
               current={settings.data.refundPolicy ?? ''}
               options={settings.data.availableRefundPolicies ?? []}

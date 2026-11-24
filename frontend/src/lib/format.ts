@@ -1,8 +1,8 @@
-export function formatMoney(amount: number | undefined, currency: string | null | undefined, locale = 'sq-XK'): string {
+export function formatMoney(amount: number | undefined, currency: string | null | undefined, locale = 'sq'): string {
   return new Intl.NumberFormat(locale, { style: 'currency', currency: currency || 'EUR' }).format(amount ?? 0)
 }
 
-export function formatDate(value: string | null | undefined, locale = 'sq-XK'): string {
+export function formatDate(value: string | null | undefined, locale = 'sq'): string {
   return value ? new Date(value).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' }) : '—'
 }
 

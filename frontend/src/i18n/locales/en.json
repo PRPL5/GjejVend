@@ -18,7 +18,13 @@
     "invoices": "Invoices",
     "owner": "Owner dashboard",
     "adminSettings": "Commission",
-    "adminPayouts": "Payouts"
+    "adminPayouts": "Payouts",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "admin": "Admin",
+    "adminVerifications": "Verifications",
+    "adminReports": "Reports",
+    "adminAudit": "Audit log"
   },
   "payment": {
     "title": "Pay for your booking",
@@ -88,7 +94,11 @@
     "running": "Running…",
     "provider": "Provider",
     "outcome": "Outcome",
-    "outcomes": { "paid": "Paid", "skipped": "Skipped", "failed": "Failed" },
+    "outcomes": {
+      "paid": "Paid",
+      "skipped": "Skipped",
+      "failed": "Failed"
+    },
     "filter": "Status",
     "allStatuses": "All",
     "payoutStatus": {
@@ -96,6 +106,59 @@
       "Processing": "Processing",
       "Paid": "Paid",
       "Failed": "Failed"
+    },
+    "verification": {
+      "title": "Verification queue",
+      "empty": "Nothing to review.",
+      "approve": "Approve",
+      "reject": "Reject",
+      "confirmReject": "Reject request",
+      "notes": "Why is it rejected? (the owner will see this)",
+      "documents": "{{count}} documents",
+      "target": {
+        "provider": "Provider",
+        "lot": "Parking lot"
+      },
+      "status": {
+        "Pending": "Pending",
+        "Approved": "Approved",
+        "Rejected": "Rejected"
+      }
+    },
+    "reports": {
+      "title": "Reports",
+      "empty": "No reports here.",
+      "action": "What to do",
+      "resolution": "Resolution note",
+      "submit": "Close report",
+      "resolved": "Resolution",
+      "target": {
+        "lot": "Parking lot",
+        "review": "Review",
+        "user": "User"
+      },
+      "actions": {
+        "Dismiss": "Dismiss (no action)",
+        "Resolve": "Resolve (no further action)",
+        "HideReview": "Hide the review",
+        "SuspendLot": "Suspend the parking lot"
+      },
+      "status": {
+        "Open": "Open",
+        "Reviewing": "Reviewing",
+        "Resolved": "Resolved",
+        "Dismissed": "Dismissed"
+      }
+    },
+    "audit": {
+      "title": "Audit log",
+      "entity": "Record type",
+      "empty": "No entries.",
+      "actor": "By",
+      "system": "system",
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {{page}} of {{pages}}"
     }
   },
   "report": {
@@ -114,5 +177,15 @@
       "Inappropriate": "Inappropriate content",
       "Other": "Something else"
     }
+  },
+  "auth": {
+    "title": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "signingIn": "Signing in…",
+    "invalid": "Wrong email or password.",
+    "notConfigured": "Sign-in is not set up. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to frontend/.env.",
+    "signedInAs": "Signed in as {{email}}"
   }
 }

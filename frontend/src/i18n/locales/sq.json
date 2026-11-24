@@ -18,7 +18,13 @@
     "invoices": "Faturat",
     "owner": "Paneli i pronarit",
     "adminSettings": "Komisioni",
-    "adminPayouts": "Pagesat"
+    "adminPayouts": "Pagesat",
+    "signIn": "Hyr",
+    "signOut": "Dil",
+    "admin": "Admin",
+    "adminVerifications": "Verifikimet",
+    "adminReports": "Raportimet",
+    "adminAudit": "Regjistri"
   },
   "payment": {
     "title": "Paguaj rezervimin",
@@ -88,7 +94,11 @@
     "running": "Duke ekzekutuar…",
     "provider": "Ofruesi",
     "outcome": "Rezultati",
-    "outcomes": { "paid": "E paguar", "skipped": "E anashkaluar", "failed": "Dështoi" },
+    "outcomes": {
+      "paid": "E paguar",
+      "skipped": "E anashkaluar",
+      "failed": "Dështoi"
+    },
     "filter": "Statusi",
     "allStatuses": "Të gjitha",
     "payoutStatus": {
@@ -96,6 +106,59 @@
       "Processing": "Në përpunim",
       "Paid": "E paguar",
       "Failed": "Dështoi"
+    },
+    "verification": {
+      "title": "Radha e verifikimit",
+      "empty": "Nuk ka asgjë për shqyrtim.",
+      "approve": "Aprovo",
+      "reject": "Refuzo",
+      "confirmReject": "Refuzo kërkesën",
+      "notes": "Pse refuzohet? (pronari do ta shohë)",
+      "documents": "{{count}} dokumente",
+      "target": {
+        "provider": "Ofruesi",
+        "lot": "Parkingu"
+      },
+      "status": {
+        "Pending": "Në pritje",
+        "Approved": "Aprovuar",
+        "Rejected": "Refuzuar"
+      }
+    },
+    "reports": {
+      "title": "Raportimet",
+      "empty": "Nuk ka raportime këtu.",
+      "action": "Çfarë të bëhet",
+      "resolution": "Shënim zgjidhjeje",
+      "submit": "Mbyll raportimin",
+      "resolved": "Zgjidhja",
+      "target": {
+        "lot": "Parkingu",
+        "review": "Vlerësimi",
+        "user": "Përdoruesi"
+      },
+      "actions": {
+        "Dismiss": "Hidhe poshtë (pa veprim)",
+        "Resolve": "Zgjidhe (pa veprim tjetër)",
+        "HideReview": "Fshih vlerësimin",
+        "SuspendLot": "Pezullo parkingun"
+      },
+      "status": {
+        "Open": "Hapur",
+        "Reviewing": "Në shqyrtim",
+        "Resolved": "Zgjidhur",
+        "Dismissed": "Hedhur poshtë"
+      }
+    },
+    "audit": {
+      "title": "Regjistri i auditimit",
+      "entity": "Lloji i të dhënës",
+      "empty": "Nuk ka hyrje.",
+      "actor": "Nga",
+      "system": "sistemi",
+      "previous": "Mbrapa",
+      "next": "Para",
+      "page": "Faqja {{page}} nga {{pages}}"
     }
   },
   "report": {
@@ -114,5 +177,15 @@
       "Inappropriate": "Përmbajtje e papërshtatshme",
       "Other": "Diçka tjetër"
     }
+  },
+  "auth": {
+    "title": "Hyr",
+    "email": "Email",
+    "password": "Fjalëkalimi",
+    "submit": "Hyr",
+    "signingIn": "Duke hyrë…",
+    "invalid": "Email ose fjalëkalim i gabuar.",
+    "notConfigured": "Hyrja nuk është konfiguruar. Shto VITE_SUPABASE_URL dhe VITE_SUPABASE_ANON_KEY te frontend/.env.",
+    "signedInAs": "Hyrë si {{email}}"
   }
 }
