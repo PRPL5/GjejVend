@@ -1,5 +1,7 @@
 using GjejVend.Application.Admin;
 using GjejVend.Application.Common;
+using GjejVend.Application.Identity;
+using GjejVend.Application.Listings;
 using GjejVend.Application.Payments;
 using GjejVend.Infrastructure;
 using GjejVend.Infrastructure.Payments;
@@ -17,6 +19,9 @@ public static class DependencyInjection
         services.AddSingleton(TimeProvider.System);
         services.AddScoped<AccessGuard>();
         services.AddScoped<IPlatformSettingsReader, PlatformSettingsReader>();
+        services.AddScoped<IRoleService, RoleService>();
+
+        services.AddScoped<IProviderService, ProviderService>();
 
         services.AddScoped<ICommissionService, CommissionService>();
         services.AddScoped<IPaymentService, PaymentService>();
