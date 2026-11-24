@@ -48,8 +48,8 @@ public sealed class StripePaymentGateway : IPaymentGateway, IPayoutGateway
             Mode = "payment",
             ClientReferenceId = request.BookingId.ToString(),
             CustomerEmail = request.CustomerEmail,
-            SuccessUrl = $"{_frontendBaseUrl}/bookings/{request.BookingId}?payment=success&session_id={{CHECKOUT_SESSION_ID}}",
-            CancelUrl = $"{_frontendBaseUrl}/bookings/{request.BookingId}?payment=cancelled",
+            SuccessUrl = $"{_frontendBaseUrl}/bookings/{request.BookingId}/pay?payment=success&session_id={{CHECKOUT_SESSION_ID}}",
+            CancelUrl = $"{_frontendBaseUrl}/bookings/{request.BookingId}/pay?payment=cancelled",
             Metadata = metadata,
             LineItems =
             [
