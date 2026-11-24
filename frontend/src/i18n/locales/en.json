@@ -1,0 +1,118 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "retry": "Try again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "none": "Nothing here yet.",
+    "errors": {
+      "network": "We could not reach the server. Check your connection and try again.",
+      "forbidden": "You do not have access to this page.",
+      "unauthorized": "Sign in to continue.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "invoices": "Invoices",
+    "owner": "Owner dashboard",
+    "adminSettings": "Commission",
+    "adminPayouts": "Payouts"
+  },
+  "payment": {
+    "title": "Pay for your booking",
+    "payNow": "Pay now",
+    "payAmount": "Pay {{amount}}",
+    "redirecting": "Taking you to secure checkout…",
+    "success": "Payment received. We are confirming your booking.",
+    "successHint": "Your invoice will be ready in a moment.",
+    "cancelled": "The payment was cancelled. You can try again while your booking is held.",
+    "viewInvoices": "View invoices",
+    "failed": "The payment did not go through.",
+    "secure": "Payments are processed securely by Stripe."
+  },
+  "invoices": {
+    "title": "Invoices",
+    "empty": "You have no paid bookings yet.",
+    "booking": "Booking {{id}}",
+    "paidOn": "Paid on {{date}}",
+    "open": "Open invoice",
+    "pdf": "PDF",
+    "notReady": "The invoice is not ready yet. Try again in a moment.",
+    "status": {
+      "Succeeded": "Paid",
+      "PartiallyRefunded": "Partly refunded",
+      "Refunded": "Refunded"
+    }
+  },
+  "owner": {
+    "title": "Owner dashboard",
+    "today": "Today",
+    "week": "Last 7 days",
+    "net": "Your earnings",
+    "gross": "Paid by drivers",
+    "commission": "Platform commission",
+    "refunded": "Refunded",
+    "bookings": "{{count}} paid bookings",
+    "payouts": "Payouts",
+    "noPayouts": "No payouts yet.",
+    "period": "Period",
+    "amount": "Amount",
+    "status": "Status",
+    "setupPayouts": "Set up payouts",
+    "setupHint": "Connect your bank details through Stripe to receive your earnings.",
+    "payoutsReady": "Thanks! Stripe is verifying your details. You will receive payouts once that is done.",
+    "payoutsRefresh": "The setup was interrupted. Start it again to finish.",
+    "notProvider": "Only parking owners have a dashboard."
+  },
+  "admin": {
+    "settingsTitle": "Commission and refunds",
+    "commissionRate": "Commission rate (%)",
+    "commissionHelp": "Applies to bookings created from now on. Existing bookings keep their rate.",
+    "refundPolicy": "Refund policy",
+    "policies": {
+      "time_based": "Time based (full 24h before, half 2h before)",
+      "full": "Always refund in full",
+      "none": "Never refund"
+    },
+    "saved": "Saved.",
+    "invalidRate": "Enter a number between 0 and 100.",
+    "last30": "Last 30 days",
+    "platformCommission": "Commission earned",
+    "payoutsTitle": "Provider payouts",
+    "runPayouts": "Run payouts",
+    "runHint": "Pays every provider with earnings in the period. Running the same period twice is safe.",
+    "from": "From",
+    "to": "To",
+    "running": "Running…",
+    "provider": "Provider",
+    "outcome": "Outcome",
+    "outcomes": { "paid": "Paid", "skipped": "Skipped", "failed": "Failed" },
+    "filter": "Status",
+    "allStatuses": "All",
+    "payoutStatus": {
+      "Pending": "Pending",
+      "Processing": "Processing",
+      "Paid": "Paid",
+      "Failed": "Failed"
+    }
+  },
+  "report": {
+    "button": "Report",
+    "title": "Report a problem",
+    "category": "What is wrong?",
+    "description": "Tell us more",
+    "descriptionPlaceholder": "Describe the problem in a few words.",
+    "submit": "Send report",
+    "sent": "Thank you. Our team will review your report.",
+    "descriptionRequired": "Please describe the problem.",
+    "categories": {
+      "Inaccurate": "Wrong or outdated information",
+      "Safety": "Safety concern",
+      "Fraud": "Fraud or scam",
+      "Inappropriate": "Inappropriate content",
+      "Other": "Something else"
+    }
+  }
+}

@@ -1,6 +1,8 @@
+using GjejVend.Application.Admin;
 using GjejVend.Application.Common;
 using GjejVend.Application.Payments;
 using GjejVend.Infrastructure;
+using GjejVend.Infrastructure.Payments;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GjejVend.Application;
@@ -8,9 +10,9 @@ namespace GjejVend.Application;
 public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(
-        this IServiceCollection services, string connectionString, string paymentWebhookSecret)
+        this IServiceCollection services, string connectionString, PaymentsSettings payments)
     {
-        services.AddInfrastructure(connectionString, paymentWebhookSecret);
+        services.AddInfrastructure(connectionString, payments);
 
         services.AddSingleton(TimeProvider.System);
         services.AddScoped<AccessGuard>();
@@ -27,6 +29,13 @@ public static class DependencyInjection
         services.AddScoped<IRefundPolicyResolver, RefundPolicyResolver>();
         services.AddScoped<IRefundService, RefundService>();
         services.AddScoped<IEarningsService, EarningsService>();
+        services.AddScoped<IInvoiceService, InvoiceService>();
+        services.AddScoped<IPayoutService, PayoutService>();
+
+        services.AddScoped<IVerificationService, VerificationService>();
+        services.AddScoped<IReportService, ReportService>();
+        services.AddScoped<IAuditLogService, AuditLogService>();
+        services.AddScoped<IAdminSettingsService, AdminSettingsService>();
         return services;
     }
 }

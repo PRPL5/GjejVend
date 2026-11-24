@@ -1,0 +1,118 @@
+{
+  "common": {
+    "loading": "Duke u ngarkuar…",
+    "retry": "Provo përsëri",
+    "save": "Ruaj",
+    "cancel": "Anulo",
+    "close": "Mbyll",
+    "none": "Ende nuk ka asgjë këtu.",
+    "errors": {
+      "network": "Nuk arritëm të lidhemi me serverin. Kontrollo lidhjen dhe provo përsëri.",
+      "forbidden": "Nuk ke qasje në këtë faqe.",
+      "unauthorized": "Hyr për të vazhduar.",
+      "generic": "Diçka shkoi keq. Provo përsëri."
+    }
+  },
+  "nav": {
+    "home": "Kryefaqja",
+    "invoices": "Faturat",
+    "owner": "Paneli i pronarit",
+    "adminSettings": "Komisioni",
+    "adminPayouts": "Pagesat"
+  },
+  "payment": {
+    "title": "Paguaj rezervimin",
+    "payNow": "Paguaj tani",
+    "payAmount": "Paguaj {{amount}}",
+    "redirecting": "Po të çojmë te pagesa e sigurt…",
+    "success": "Pagesa u pranua. Po e konfirmojmë rezervimin.",
+    "successHint": "Fatura jote do të jetë gati pas pak.",
+    "cancelled": "Pagesa u anulua. Mund të provosh përsëri sa kohë rezervimi mbahet.",
+    "viewInvoices": "Shiko faturat",
+    "failed": "Pagesa nuk u krye.",
+    "secure": "Pagesat përpunohen në mënyrë të sigurt nga Stripe."
+  },
+  "invoices": {
+    "title": "Faturat",
+    "empty": "Ende nuk ke rezervime të paguara.",
+    "booking": "Rezervimi {{id}}",
+    "paidOn": "Paguar më {{date}}",
+    "open": "Hap faturën",
+    "pdf": "PDF",
+    "notReady": "Fatura nuk është gati ende. Provo përsëri pas pak.",
+    "status": {
+      "Succeeded": "E paguar",
+      "PartiallyRefunded": "Rimbursuar pjesërisht",
+      "Refunded": "Rimbursuar"
+    }
+  },
+  "owner": {
+    "title": "Paneli i pronarit",
+    "today": "Sot",
+    "week": "7 ditët e fundit",
+    "net": "Fitimi yt",
+    "gross": "Paguar nga shoferët",
+    "commission": "Komisioni i platformës",
+    "refunded": "Rimbursuar",
+    "bookings": "{{count}} rezervime të paguara",
+    "payouts": "Pagesat për ty",
+    "noPayouts": "Ende nuk ka pagesa.",
+    "period": "Periudha",
+    "amount": "Shuma",
+    "status": "Statusi",
+    "setupPayouts": "Konfiguro pagesat",
+    "setupHint": "Lidh të dhënat e bankës përmes Stripe për të marrë fitimet.",
+    "payoutsReady": "Faleminderit! Stripe po i verifikon të dhënat. Do t'i marrësh pagesat sapo të përfundojë.",
+    "payoutsRefresh": "Konfigurimi u ndërpre. Fillo përsëri për ta përfunduar.",
+    "notProvider": "Vetëm pronarët e parkingjeve kanë panel."
+  },
+  "admin": {
+    "settingsTitle": "Komisioni dhe rimbursimet",
+    "commissionRate": "Norma e komisionit (%)",
+    "commissionHelp": "Vlen për rezervimet e krijuara tani e tutje. Rezervimet ekzistuese e mbajnë normën e tyre.",
+    "refundPolicy": "Politika e rimbursimit",
+    "policies": {
+      "time_based": "Sipas kohës (e plotë 24 orë para, gjysma 2 orë para)",
+      "full": "Gjithmonë i plotë",
+      "none": "Asnjëherë"
+    },
+    "saved": "U ruajt.",
+    "invalidRate": "Shkruaj një numër nga 0 deri në 100.",
+    "last30": "30 ditët e fundit",
+    "platformCommission": "Komisioni i fituar",
+    "payoutsTitle": "Pagesat për ofruesit",
+    "runPayouts": "Ekzekuto pagesat",
+    "runHint": "Paguan çdo ofrues me fitime në periudhë. Ekzekutimi dy herë i së njëjtës periudhë është i sigurt.",
+    "from": "Nga",
+    "to": "Deri",
+    "running": "Duke ekzekutuar…",
+    "provider": "Ofruesi",
+    "outcome": "Rezultati",
+    "outcomes": { "paid": "E paguar", "skipped": "E anashkaluar", "failed": "Dështoi" },
+    "filter": "Statusi",
+    "allStatuses": "Të gjitha",
+    "payoutStatus": {
+      "Pending": "Në pritje",
+      "Processing": "Në përpunim",
+      "Paid": "E paguar",
+      "Failed": "Dështoi"
+    }
+  },
+  "report": {
+    "button": "Raporto",
+    "title": "Raporto një problem",
+    "category": "Çfarë nuk është në rregull?",
+    "description": "Na trego më shumë",
+    "descriptionPlaceholder": "Përshkruaje problemin me pak fjalë.",
+    "submit": "Dërgo raportimin",
+    "sent": "Faleminderit. Ekipi ynë do ta shqyrtojë raportimin.",
+    "descriptionRequired": "Të lutem përshkruaje problemin.",
+    "categories": {
+      "Inaccurate": "Informacion i gabuar ose i vjetruar",
+      "Safety": "Shqetësim për sigurinë",
+      "Fraud": "Mashtrim",
+      "Inappropriate": "Përmbajtje e papërshtatshme",
+      "Other": "Diçka tjetër"
+    }
+  }
+}

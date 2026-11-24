@@ -25,11 +25,15 @@ public sealed class PaymentWebhookService(
         var webhookEvent = gateway.ParseWebhook(body, signature);
         if (webhookEvent is null) return false;
 
-        var payment = await db.Set<Payment>().AsNoTracking()
-            .FirstOrDefaultAsync(p => p.Provider == gateway.Name && p.ProviderReference == webhookEvent.Reference, ct);
+        if (webhookEvent.Type == GatewayEventType.Ignored) return true;
+
+        var payments = db.Set<Payment>().AsNoTracking().Where(p => p.Provider == gateway.Name);
+        var payment = webhookEvent.PaymentId is { } paymentId
+            ? await payments.FirstOrDefaultAsync(p => p.Id == paymentId, ct)
+            : await payments.FirstOrDefaultAsync(p => p.ProviderReference == webhookEvent.Reference, ct);
         if (payment is null)
         {
-            logger.LogWarning("Webhook for unknown payment reference {Reference}", webhookEvent.Reference);
+            logger.LogWarning("Webhook for unknown payment {Reference}", webhookEvent.Reference);
             return true; // acknowledge so the provider stops retrying
         }
 
