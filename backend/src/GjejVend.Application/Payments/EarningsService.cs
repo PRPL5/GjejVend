@@ -24,6 +24,9 @@ public interface IEarningsService
     /// <summary>Earnings of the signed-in owner across all their providers.</summary>
     Task<EarningsSummary> GetOwnerEarningsAsync(DateTime from, DateTime to, CancellationToken ct = default);
 
+    /// <summary>Admin: totals across all providers. Commission is what the platform earned.</summary>
+    Task<EarningsSummary> GetPlatformSummaryAsync(DateTime from, DateTime to, CancellationToken ct = default);
+
     /// <summary>Earnings of one provider. No authorization check: for admin-side services such as payouts.</summary>
     Task<EarningsSummary> GetProviderEarningsAsync(Guid providerId, DateTime from, DateTime to, CancellationToken ct = default);
 }
@@ -48,13 +51,20 @@ public sealed class EarningsService(GjejVendDbContext db, AccessGuard access) : 
         return await ComputeAsync(providerIds, from, to, ct);
     }
 
+    public async Task<EarningsSummary> GetPlatformSummaryAsync(DateTime from, DateTime to, CancellationToken ct = default)
+    {
+        if (from >= to) throw new BusinessRuleException("'from' must be before 'to'.");
+        await access.RequireAdminAsync(ct);
+        return await ComputeAsync(null, from, to, ct);
+    }
+
     public Task<EarningsSummary> GetProviderEarningsAsync(Guid providerId, DateTime from, DateTime to, CancellationToken ct = default)
         => ComputeAsync([providerId], from, to, ct);
 
-    private async Task<EarningsSummary> ComputeAsync(IReadOnlyList<Guid> providerIds, DateTime from, DateTime to, CancellationToken ct)
+    private async Task<EarningsSummary> ComputeAsync(IReadOnlyList<Guid>? providerIds, DateTime from, DateTime to, CancellationToken ct)
     {
         var rows = await db.Set<LedgerEntry>().AsNoTracking()
-            .Where(l => l.ProviderId != null && providerIds.Contains(l.ProviderId.Value)
+            .Where(l => l.ProviderId != null && (providerIds == null || providerIds.Contains(l.ProviderId.Value))
                         && l.CreatedAt >= from && l.CreatedAt < to)
             .Select(l => new { l.EntryType, l.Amount, l.BookingId })
             .ToListAsync(ct);

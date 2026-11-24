@@ -1,3 +1,4 @@
+using GjejVend.Application.Admin;
 using GjejVend.Application.Common;
 using GjejVend.Application.Payments;
 using GjejVend.Infrastructure;
@@ -30,6 +31,11 @@ public static class DependencyInjection
         services.AddScoped<IEarningsService, EarningsService>();
         services.AddScoped<IInvoiceService, InvoiceService>();
         services.AddScoped<IPayoutService, PayoutService>();
+
+        services.AddScoped<IVerificationService, VerificationService>();
+        services.AddScoped<IReportService, ReportService>();
+        services.AddScoped<IAuditLogService, AuditLogService>();
+        services.AddScoped<IAdminSettingsService, AdminSettingsService>();
         return services;
     }
 }
