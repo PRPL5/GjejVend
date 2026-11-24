@@ -21,14 +21,15 @@ public sealed class PaymentsController(
     public async Task<ActionResult<RefundPreview>> RefundPreview(Guid bookingId, CancellationToken ct)
         => Ok(await refunds.PreviewAsync(bookingId, ct));
 
-    /// <summary>Provider callback. Authenticated by its signature header, not by a JWT.</summary>
+    /// <summary>Stripe callback (the fake gateway uses X-Signature). Authenticated by signature, not by a JWT.</summary>
     [HttpPost("webhook")]
     [AllowAnonymous]
     public async Task<IActionResult> Webhook(CancellationToken ct)
     {
         using var reader = new StreamReader(Request.Body);
         var body = await reader.ReadToEndAsync(ct);
-        var signature = Request.Headers["X-Signature"].FirstOrDefault();
+        var signature = Request.Headers["Stripe-Signature"].FirstOrDefault()
+                        ?? Request.Headers["X-Signature"].FirstOrDefault();
         return await webhook.HandleAsync(body, signature, ct) ? Ok() : Unauthorized();
     }
 }

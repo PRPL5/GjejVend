@@ -113,7 +113,8 @@ public sealed class RefundService(
 
         try
         {
-            refund.ProviderReference = await gateway.RefundAsync(payment.ProviderReference ?? string.Empty, amount, reason, ct);
+            refund.ProviderReference = await gateway.RefundAsync(
+                payment.ProviderReference ?? string.Empty, amount, reason, refund.Id.ToString(), ct);
             refund.Status = RefundStatus.Succeeded; // the database writes the ledger entry and updates the payment status
         }
         catch (Exception ex) when (ex is not OperationCanceledException)

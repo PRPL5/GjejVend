@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <PackageReference Include="Stripe.net" />
     <PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
   </ItemGroup>
 

@@ -5,10 +5,10 @@ using System.Text.Json;
 namespace GjejVend.Infrastructure.Payments;
 
 /// <summary>
-/// Test-mode gateway. It never moves money: it issues references and verifies HMAC-SHA256 signed
-/// webhooks the way a real provider would, so the whole payment flow can be exercised end to end.
+/// Development and test gateway used when no Stripe key is configured. It never moves money: it issues
+/// references and verifies HMAC-SHA256 signed webhooks, so the whole flow can run without Stripe.
 /// </summary>
-public sealed class FakePaymentGateway(string webhookSecret) : IPaymentGateway
+public sealed class FakePaymentGateway(string webhookSecret) : IPaymentGateway, IPayoutGateway
 {
     public const string ProviderName = "fake";
 
@@ -20,8 +20,23 @@ public sealed class FakePaymentGateway(string webhookSecret) : IPaymentGateway
         return Task.FromResult(new GatewayCheckout(reference, $"/fake-checkout/{reference}"));
     }
 
-    public Task<string> RefundAsync(string paymentReference, decimal amount, string reason, CancellationToken ct = default)
-        => Task.FromResult($"fake_ref_{Guid.NewGuid():N}");
+    public Task<string> RefundAsync(string paymentReference, decimal amount, string reason,
+        string idempotencyKey, CancellationToken ct = default)
+        => Task.FromResult($"fake_ref_{idempotencyKey}");
+
+    public Task<GatewayInvoice?> GetInvoiceAsync(string paymentReference, CancellationToken ct = default)
+        => Task.FromResult<GatewayInvoice?>(new GatewayInvoice(
+            $"FAKE-{paymentReference[^6..].ToUpperInvariant()}", $"/fake-invoice/{paymentReference}", null));
+
+    public Task<string> CreateConnectedAccountAsync(Guid providerId, string? email, CancellationToken ct = default)
+        => Task.FromResult($"acct_fake_{providerId:N}");
+
+    public Task<string> CreateOnboardingLinkAsync(string accountId, string returnUrl, string refreshUrl, CancellationToken ct = default)
+        => Task.FromResult(returnUrl);
+
+    public Task<string> TransferAsync(string accountId, decimal amount, string currency, string description,
+        string idempotencyKey, CancellationToken ct = default)
+        => Task.FromResult($"fake_tr_{idempotencyKey}");
 
     public GatewayWebhookEvent? ParseWebhook(string body, string? signature)
     {
@@ -37,8 +52,8 @@ public sealed class FakePaymentGateway(string webhookSecret) : IPaymentGateway
             var reason = root.TryGetProperty("reason", out var r) ? r.GetString() : null;
             return root.GetProperty("type").GetString() switch
             {
-                "payment.succeeded" => new GatewayWebhookEvent(GatewayEventType.PaymentSucceeded, reference, null),
-                "payment.failed" => new GatewayWebhookEvent(GatewayEventType.PaymentFailed, reference, reason),
+                "payment.succeeded" => new GatewayWebhookEvent(GatewayEventType.PaymentSucceeded, reference, null, null),
+                "payment.failed" => new GatewayWebhookEvent(GatewayEventType.PaymentFailed, reference, null, reason),
                 _ => null,
             };
         }
