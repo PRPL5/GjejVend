@@ -28,6 +28,7 @@ public static class DependencyInjection
         services.AddScoped<IRefundPolicyResolver, RefundPolicyResolver>();
         services.AddScoped<IRefundService, RefundService>();
         services.AddScoped<IEarningsService, EarningsService>();
+        services.AddScoped<IInvoiceService, InvoiceService>();
         return services;
     }
 }
