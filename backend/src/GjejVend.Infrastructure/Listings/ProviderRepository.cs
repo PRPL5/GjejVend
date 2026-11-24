@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GjejVend.Infrastructure.Listings;
 
+/// <summary>Data access for parking_providers and the provider role. Soft-deleted providers are ignored.</summary>
 public interface IProviderRepository
 {
     Task<ParkingProvider?> FindByOwnerAsync(Guid ownerId, CancellationToken ct = default);

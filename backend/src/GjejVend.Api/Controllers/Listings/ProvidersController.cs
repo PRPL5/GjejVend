@@ -9,6 +9,7 @@ namespace GjejVend.Api.Controllers.Listings;
 [Route("api/providers")]
 public sealed class ProvidersController(IProviderService providers) : ControllerBase
 {
+    /// <summary>Become a parking provider. Returns 201 with the new profile.</summary>
     [HttpPost]
     public async Task<ActionResult<ProviderResponse>> Create(ProviderRequest request, CancellationToken ct)
     {
@@ -16,10 +17,12 @@ public sealed class ProvidersController(IProviderService providers) : Controller
         return CreatedAtAction(nameof(GetMine), provider);
     }
 
+    /// <summary>The signed-in user's provider profile, or 404.</summary>
     [HttpGet("me")]
     public async Task<ActionResult<ProviderResponse>> GetMine(CancellationToken ct) =>
         Ok(await providers.GetMineAsync(ct));
 
+    /// <summary>Edit the signed-in user's provider profile.</summary>
     [HttpPut("me")]
     public async Task<ActionResult<ProviderResponse>> UpdateMine(ProviderRequest request, CancellationToken ct) =>
         Ok(await providers.UpdateMineAsync(request, ct));

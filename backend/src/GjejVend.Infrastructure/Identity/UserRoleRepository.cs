@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GjejVend.Infrastructure.Identity;
 
+/// <summary>Reads the roles a user holds in user_roles (customer, provider, admin).</summary>
 public interface IUserRoleRepository
 {
     Task<IReadOnlyList<Role>> GetRolesAsync(Guid userId, CancellationToken ct = default);

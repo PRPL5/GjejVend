@@ -6,6 +6,7 @@ namespace GjejVend.Application.Identity;
 
 public interface IRoleService
 {
+    /// <summary>Roles of the signed-in user, used by GET /me.</summary>
     Task<IReadOnlyList<Role>> GetMyRolesAsync(CancellationToken ct = default);
 }
 

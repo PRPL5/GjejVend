@@ -5,6 +5,7 @@ using GjejVend.Infrastructure.Listings;
 
 namespace GjejVend.Application.Listings;
 
+/// <summary>What an owner sends to create or edit their provider profile. Ownership and verification are set by the server.</summary>
 public sealed record ProviderRequest(
     ProviderType ProviderType,
     string DisplayName,
@@ -28,11 +29,20 @@ public sealed record ProviderResponse(
 
 public interface IProviderService
 {
+    /// <summary>Makes the signed-in user a parking provider: creates their profile and grants the provider role.</summary>
     Task<ProviderResponse> CreateAsync(ProviderRequest request, CancellationToken ct = default);
+
+    /// <summary>The signed-in user's provider profile. Throws NotFound when they are not a provider yet.</summary>
     Task<ProviderResponse> GetMineAsync(CancellationToken ct = default);
+
+    /// <summary>Edits the signed-in user's provider profile.</summary>
     Task<ProviderResponse> UpdateMineAsync(ProviderRequest request, CancellationToken ct = default);
 }
 
+/// <summary>
+/// Provider profiles (M1). One profile per user for now; the provider role is granted in the same save,
+/// so the profile and the role are never out of step.
+/// </summary>
 public sealed class ProviderService(IProviderRepository providers, AccessGuard access) : IProviderService
 {
     public async Task<ProviderResponse> CreateAsync(ProviderRequest request, CancellationToken ct = default)
