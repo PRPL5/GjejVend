@@ -1,4 +1,6 @@
 using System.Security.Cryptography;
+using GjejVend.Infrastructure.Identity;
+using GjejVend.Infrastructure.Listings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -15,6 +17,8 @@ public sealed class ApiFactory : WebApplicationFactory<Program>
     private const string Issuer = "https://test-project.supabase.co/auth/v1";
 
     private readonly ECDsaSecurityKey _signingKey = new(ECDsa.Create(ECCurve.NamedCurves.nistP256));
+
+    public InMemoryStore Store { get; } = new();
 
     public string CreateToken(Guid subject, string audience = "authenticated", DateTime? expires = null, SecurityKey? signingKey = null)
     {
@@ -36,12 +40,18 @@ public sealed class ApiFactory : WebApplicationFactory<Program>
         builder.UseSetting("ConnectionStrings:Default", "Host=localhost;Database=unused;Username=unused;Password=unused");
         builder.UseSetting("Supabase:Url", "https://test-project.supabase.co");
         builder.ConfigureTestServices(services =>
+        {
             services.PostConfigure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.Configuration = new OpenIdConnectConfiguration { Issuer = Issuer };
                 options.TokenValidationParameters.ValidIssuer = Issuer;
                 options.TokenValidationParameters.IssuerSigningKey = _signingKey;
-            }));
+            });
+
+            services.AddSingleton(Store);
+            services.AddScoped<IUserRoleRepository>(_ => Store);
+            services.AddScoped<IProviderRepository>(_ => Store);
+        });
     }
 
     protected override void Dispose(bool disposing)

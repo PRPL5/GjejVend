@@ -1,3 +1,5 @@
+using GjejVend.Infrastructure.Identity;
+using GjejVend.Infrastructure.Listings;
 using GjejVend.Infrastructure.Payments;
 using GjejVend.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +32,9 @@ public static class DependencyInjection
             services.AddSingleton<IPaymentGateway>(sp => sp.GetRequiredService<FakePaymentGateway>());
             services.AddSingleton<IPayoutGateway>(sp => sp.GetRequiredService<FakePaymentGateway>());
         }
+
+        services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+        services.AddScoped<IProviderRepository, ProviderRepository>();
 
         services.AddHealthChecks().AddNpgSql(connectionString, name: "database");
 
