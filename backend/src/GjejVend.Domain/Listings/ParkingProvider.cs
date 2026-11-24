@@ -11,6 +11,9 @@ public sealed class ParkingProvider
     public string? Description { get; set; }
     public string? ContactEmail { get; set; }
     public string? ContactPhone { get; set; }
+
+    /// <summary>Id of the provider's connected payout account (Stripe Connect). Null until they onboard.</summary>
+    public string? PaymentAccountId { get; set; }
     public VerificationStatus VerificationStatus { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

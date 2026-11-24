@@ -23,6 +23,9 @@ public interface IEarningsService
 {
     /// <summary>Earnings of the signed-in owner across all their providers.</summary>
     Task<EarningsSummary> GetOwnerEarningsAsync(DateTime from, DateTime to, CancellationToken ct = default);
+
+    /// <summary>Earnings of one provider. No authorization check: for admin-side services such as payouts.</summary>
+    Task<EarningsSummary> GetProviderEarningsAsync(Guid providerId, DateTime from, DateTime to, CancellationToken ct = default);
 }
 
 /// <summary>
@@ -42,6 +45,14 @@ public sealed class EarningsService(GjejVendDbContext db, AccessGuard access) : 
             .Select(p => p.Id).ToListAsync(ct);
         if (providerIds.Count == 0) throw new ForbiddenException("Only parking providers have earnings.");
 
+        return await ComputeAsync(providerIds, from, to, ct);
+    }
+
+    public Task<EarningsSummary> GetProviderEarningsAsync(Guid providerId, DateTime from, DateTime to, CancellationToken ct = default)
+        => ComputeAsync([providerId], from, to, ct);
+
+    private async Task<EarningsSummary> ComputeAsync(IReadOnlyList<Guid> providerIds, DateTime from, DateTime to, CancellationToken ct)
+    {
         var rows = await db.Set<LedgerEntry>().AsNoTracking()
             .Where(l => l.ProviderId != null && providerIds.Contains(l.ProviderId.Value)
                         && l.CreatedAt >= from && l.CreatedAt < to)

@@ -29,6 +29,7 @@ public static class DependencyInjection
         services.AddScoped<IRefundService, RefundService>();
         services.AddScoped<IEarningsService, EarningsService>();
         services.AddScoped<IInvoiceService, InvoiceService>();
+        services.AddScoped<IPayoutService, PayoutService>();
         return services;
     }
 }
