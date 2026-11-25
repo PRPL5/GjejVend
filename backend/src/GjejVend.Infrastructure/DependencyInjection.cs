@@ -35,6 +35,7 @@ public static class DependencyInjection
 
         services.AddScoped<IUserRoleRepository, UserRoleRepository>();
         services.AddScoped<IProviderRepository, ProviderRepository>();
+        services.AddScoped<IListingRepository, ListingRepository>();
 
         services.AddHealthChecks().AddNpgSql(connectionString, name: "database");
 

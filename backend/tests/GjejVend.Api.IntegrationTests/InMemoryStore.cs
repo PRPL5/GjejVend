@@ -7,9 +7,10 @@ using GjejVend.Infrastructure.Listings;
 namespace GjejVend.Api.IntegrationTests;
 
 /// <summary>In-memory stand-in for the database, so API tests run without Postgres.</summary>
-public sealed class InMemoryStore : IUserRoleRepository, IProviderRepository
+public sealed class InMemoryStore : IUserRoleRepository, IProviderRepository, IListingRepository
 {
     private readonly ConcurrentDictionary<Guid, ParkingProvider> _providers = new();
+    private readonly ConcurrentDictionary<Guid, ParkingLocation> _locations = new();
     private readonly ConcurrentDictionary<(Guid UserId, Role Role), UserRole> _roles = new();
     private readonly List<object> _pending = [];
 
@@ -35,6 +36,23 @@ public sealed class InMemoryStore : IUserRoleRepository, IProviderRepository
         lock (_pending) _pending.Add(userRole);
     }
 
+    public Task<ParkingLocation?> FindByIdAsync(Guid id, CancellationToken ct = default) =>
+        Task.FromResult(_locations.TryGetValue(id, out var l) && l.DeletedAt == null ? l : null);
+
+    public Task<IReadOnlyList<ParkingLocation>> ListByProviderAsync(Guid providerId, CancellationToken ct = default) =>
+        Task.FromResult<IReadOnlyList<ParkingLocation>>(_locations.Values
+            .Where(l => l.ProviderId == providerId && l.DeletedAt == null)
+            .OrderByDescending(l => l.CreatedAt)
+            .ToList());
+
+    public Task<bool> SlugExistsAsync(string slug, CancellationToken ct = default) =>
+        Task.FromResult(_locations.Values.Any(l => l.Slug == slug));
+
+    public void Add(ParkingLocation location)
+    {
+        lock (_pending) _pending.Add(location);
+    }
+
     public Task SaveChangesAsync(CancellationToken ct = default)
     {
         lock (_pending)
@@ -50,6 +68,11 @@ public sealed class InMemoryStore : IUserRoleRepository, IProviderRepository
                         break;
                     case UserRole r:
                         _roles[(r.UserId, r.Role)] = r;
+                        break;
+                    case ParkingLocation l:
+                        if (l.Id == Guid.Empty) l.Id = Guid.NewGuid();
+                        if (l.CreatedAt == default) l.CreatedAt = l.UpdatedAt = DateTime.UtcNow;
+                        _locations[l.Id] = l;
                         break;
                 }
             }

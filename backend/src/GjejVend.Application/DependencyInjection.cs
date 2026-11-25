@@ -22,6 +22,8 @@ public static class DependencyInjection
         services.AddScoped<IRoleService, RoleService>();
 
         services.AddScoped<IProviderService, ProviderService>();
+        services.AddScoped<IParkingLocationFactory, ParkingLocationFactory>();
+        services.AddScoped<IListingService, ListingService>();
 
         services.AddScoped<ICommissionService, CommissionService>();
         services.AddScoped<IPaymentService, PaymentService>();

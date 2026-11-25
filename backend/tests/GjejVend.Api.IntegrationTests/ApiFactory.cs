@@ -51,6 +51,7 @@ public sealed class ApiFactory : WebApplicationFactory<Program>
             services.AddSingleton(Store);
             services.AddScoped<IUserRoleRepository>(_ => Store);
             services.AddScoped<IProviderRepository>(_ => Store);
+            services.AddScoped<IListingRepository>(_ => Store);
         });
     }
 
