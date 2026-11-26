@@ -1,0 +1,174 @@
+{
+  "common": {
+    "appName": "GjejVend",
+    "tagline": "Gjej parkingun tënd në Prishtinë.",
+    "nav": {
+      "bookings": "Rezervimet",
+      "favorites": "Të ruajturat",
+      "notifications": "Njoftimet",
+      "arrivals": "Ardhjet",
+      "ownerReviews": "Vlerësimet",
+      "language": "English"
+    },
+    "loading": "Duke ngarkuar…",
+    "retry": "Provo përsëri",
+    "close": "Mbyll",
+    "signInRequired": "Hyni në llogari për të vazhduar.",
+    "errors": {
+      "network": "Nuk ka lidhje me serverin. Kontrolloni internetin dhe provoni përsëri.",
+      "unauthorized": "Seanca ka skaduar. Hyni përsëri.",
+      "notFound": "Nuk u gjet.",
+      "unknown": "Diçka shkoi keq. Provoni përsëri."
+    }
+  },
+  "bookings": {
+    "status": {
+      "pending": "Në pritje të pagesës",
+      "confirmed": "E konfirmuar",
+      "active": "Në parking",
+      "completed": "E përfunduar",
+      "cancelled": "E anuluar",
+      "expired": "Ka skaduar",
+      "no_show": "Nuk u paraqit"
+    },
+    "vehicleType": {
+      "car": "Veturë",
+      "motorcycle": "Motoçikletë",
+      "van": "Furgon",
+      "suv": "SUV"
+    },
+    "availability": {
+      "free_one": "{{count}} vend i lirë",
+      "free_other": "{{count}} vende të lira",
+      "full": "Plot",
+      "closed": "Mbyllur në këtë orar"
+    },
+    "checkout": {
+      "title": "Rezervo",
+      "from": "Nga",
+      "to": "Deri",
+      "plate": "Targa",
+      "vehicleType": "Lloji i automjetit",
+      "payment": "Pagesa",
+      "paymentNote": "Vendi mbahet 15 minuta. Rezervimi konfirmohet pasi të paguhet.",
+      "total": "Totali",
+      "submit": "Rezervo",
+      "submitting": "Duke rezervuar…",
+      "invalidPeriod": "Ora e mbarimit duhet të jetë pas orës së fillimit."
+    },
+    "ticket": {
+      "title": "Bileta",
+      "reference": "Kodi",
+      "period": "Koha",
+      "plate": "Targa",
+      "total": "Totali",
+      "accessInstructions": "Si të hyni",
+      "arrivalInstructions": "Si të arrini",
+      "navigate": "Navigo",
+      "extend": "Zgjat",
+      "cancel": "Anulo",
+      "expiresIn": "Skadon pas {{time}}",
+      "startsIn": "Fillon pas {{time}}",
+      "endsIn": "Mbaron pas {{time}}",
+      "pendingNote": "Paguani para se të skadojë koha që ta mbani vendin.",
+      "qrHint": "Tregojeni këtë kod te hyrja.",
+      "offline": "Pa lidhje. Po shihni të dhënat e fundit të ruajtura.",
+      "cancellationReason": "Arsyeja: {{reason}}"
+    },
+    "extend": {
+      "title": "Zgjat rezervimin",
+      "newEnd": "Mbaron në",
+      "submit": "Zgjat"
+    },
+    "cancel": {
+      "title": "Anulo rezervimin?",
+      "reason": "Arsyeja (opsionale)",
+      "submit": "Po, anuloje",
+      "keep": "Mbaje rezervimin"
+    },
+    "review": {
+      "title": "Si ishte parkimi?",
+      "rating": "Vlerësimi",
+      "stars_one": "{{count}} yll",
+      "stars_other": "{{count}} yje",
+      "comment": "Koment (opsional)",
+      "submit": "Dërgo vlerësimin",
+      "thanks": "Faleminderit për vlerësimin."
+    },
+    "list": {
+      "title": "Rezervimet",
+      "upcoming": "Të ardhshme",
+      "past": "Të kaluara",
+      "empty": "Ende nuk keni rezervime.",
+      "emptyPast": "Nuk keni rezervime të kaluara."
+    },
+    "arrivals": {
+      "title": "Ardhjet sot",
+      "empty": "Asnjë ardhje sot.",
+      "checkIn": "Regjistro hyrjen",
+      "checkOut": "Regjistro daljen",
+      "scanTitle": "Skano biletën",
+      "location": "Parkingu",
+      "token": "Kodi i biletës",
+      "scanCheckIn": "Hyrje",
+      "scanCheckOut": "Dalje",
+      "done": "{{plate}}: {{status}}"
+    },
+    "ownerReviews": {
+      "title": "Vlerësimet e parkingjeve",
+      "empty": "Ende nuk keni vlerësime.",
+      "reply": "Përgjigja juaj",
+      "submit": "Dërgo përgjigjen",
+      "yourReply": "Përgjigja juaj: {{reply}}"
+    },
+    "notifications": {
+      "title": "Njoftimet",
+      "empty": "Nuk keni njoftime.",
+      "markRead": "Shëno si të lexuar",
+      "markAllRead": "Shëno të gjitha si të lexuara",
+      "unread_one": "{{count}} njoftim i palexuar",
+      "unread_other": "{{count}} njoftime të palexuara",
+      "openTicket": "Hap biletën",
+      "types": {
+        "booking_confirmed": "Rezervimi u konfirmua",
+        "booking_cancelled": "Rezervimi u anulua",
+        "booking_extended": "Rezervimi u zgjat",
+        "booking_checked_in": "Hyrja u regjistrua",
+        "booking_completed": "Rezervimi përfundoi",
+        "booking_no_show": "Rezervimi u shënua si mosparaqitje",
+        "review_reminder": "Si ishte parkimi? Lini një vlerësim."
+      }
+    },
+    "favorites": {
+      "title": "Parkingjet e ruajtura",
+      "empty": "Ende nuk keni ruajtur parkingje.",
+      "save": "Ruaje",
+      "saved": "E ruajtur",
+      "remove": "Hiqe"
+    },
+    "errors": {
+      "validation_failed": "Kontrolloni fushat dhe provoni përsëri.",
+      "booking_not_found": "Rezervimi nuk u gjet.",
+      "location_not_found": "Ky parking nuk është i disponueshëm.",
+      "booking_invalid_period": "Koha e rezervimit nuk është e vlefshme.",
+      "booking_customer_inactive": "Llogaria juaj nuk mund të rezervojë.",
+      "booking_location_unavailable": "Ky parking nuk pranon rezervime tani.",
+      "booking_space_mismatch": "Zgjidhni vendin vetëm te parkingjet që shesin vende.",
+      "booking_vehicle_not_owned": "Ky automjet nuk është i juaji.",
+      "booking_vehicle_type_not_allowed": "Ky parking nuk pranon këtë lloj automjeti.",
+      "booking_outside_opening_hours": "Parkingu është i mbyllur në një pjesë të kësaj kohe.",
+      "booking_space_unavailable": "Ky vend është i zënë në këtë kohë.",
+      "booking_no_capacity": "Parkingu është plot në këtë kohë.",
+      "booking_no_rate": "Ky parking nuk ka çmim për këtë kohë.",
+      "booking_duration_out_of_range": "Rezervimi është shumë i shkurtër ose shumë i gjatë për këtë parking.",
+      "booking_not_extendable": "Vetëm rezervimet e konfirmuara ose aktive mund të zgjaten.",
+      "booking_invalid_transition": "Rezervimi ka ndryshuar ndërkohë. Rifreskoni faqen.",
+      "review_booking_not_eligible": "Vetëm rezervimet e përfunduara mund të vlerësohen.",
+      "review_already_exists": "Ky rezervim është vlerësuar tashmë.",
+      "ticket_not_found": "Kjo biletë nuk ekziston.",
+      "ticket_wrong_location": "Kjo biletë është për një parking tjetër.",
+      "not_location_owner": "Vetëm pronari i këtij parkingu mund ta bëjë këtë.",
+      "notification_not_found": "Njoftimi nuk u gjet."
+    }
+  }
+}

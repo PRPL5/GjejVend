@@ -1,0 +1,174 @@
+{
+  "common": {
+    "appName": "GjejVend",
+    "tagline": "Find your parking in Pristina.",
+    "nav": {
+      "bookings": "Bookings",
+      "favorites": "Saved",
+      "notifications": "Notifications",
+      "arrivals": "Arrivals",
+      "ownerReviews": "Reviews",
+      "language": "Shqip"
+    },
+    "loading": "Loading…",
+    "retry": "Try again",
+    "close": "Close",
+    "signInRequired": "Sign in to continue.",
+    "errors": {
+      "network": "Can't reach the server. Check your connection and try again.",
+      "unauthorized": "Your session has expired. Sign in again.",
+      "notFound": "Not found.",
+      "unknown": "Something went wrong. Try again."
+    }
+  },
+  "bookings": {
+    "status": {
+      "pending": "Awaiting payment",
+      "confirmed": "Confirmed",
+      "active": "Parked",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "expired": "Expired",
+      "no_show": "No-show"
+    },
+    "vehicleType": {
+      "car": "Car",
+      "motorcycle": "Motorcycle",
+      "van": "Van",
+      "suv": "SUV"
+    },
+    "availability": {
+      "free_one": "{{count}} spot free",
+      "free_other": "{{count}} spots free",
+      "full": "Full",
+      "closed": "Closed at this time"
+    },
+    "checkout": {
+      "title": "Book",
+      "from": "From",
+      "to": "Until",
+      "plate": "Plate",
+      "vehicleType": "Vehicle type",
+      "payment": "Payment",
+      "paymentNote": "The spot is held for 15 minutes. The booking is confirmed once paid.",
+      "total": "Total",
+      "submit": "Book",
+      "submitting": "Booking…",
+      "invalidPeriod": "The end time must be after the start time."
+    },
+    "ticket": {
+      "title": "Ticket",
+      "reference": "Reference",
+      "period": "Time",
+      "plate": "Plate",
+      "total": "Total",
+      "accessInstructions": "How to get in",
+      "arrivalInstructions": "How to get there",
+      "navigate": "Navigate",
+      "extend": "Extend",
+      "cancel": "Cancel",
+      "expiresIn": "Expires in {{time}}",
+      "startsIn": "Starts in {{time}}",
+      "endsIn": "Ends in {{time}}",
+      "pendingNote": "Pay before the time runs out to keep the spot.",
+      "qrHint": "Show this code at the entrance.",
+      "offline": "Offline. Showing the last saved ticket.",
+      "cancellationReason": "Reason: {{reason}}"
+    },
+    "extend": {
+      "title": "Extend booking",
+      "newEnd": "Ends at",
+      "submit": "Extend"
+    },
+    "cancel": {
+      "title": "Cancel this booking?",
+      "reason": "Reason (optional)",
+      "submit": "Yes, cancel it",
+      "keep": "Keep booking"
+    },
+    "review": {
+      "title": "How was your parking?",
+      "rating": "Rating",
+      "stars_one": "{{count}} star",
+      "stars_other": "{{count}} stars",
+      "comment": "Comment (optional)",
+      "submit": "Send review",
+      "thanks": "Thanks for your review."
+    },
+    "list": {
+      "title": "Bookings",
+      "upcoming": "Upcoming",
+      "past": "Past",
+      "empty": "You have no bookings yet.",
+      "emptyPast": "No past bookings."
+    },
+    "arrivals": {
+      "title": "Today's arrivals",
+      "empty": "No arrivals today.",
+      "checkIn": "Check in",
+      "checkOut": "Check out",
+      "scanTitle": "Scan a ticket",
+      "location": "Parking",
+      "token": "Ticket code",
+      "scanCheckIn": "Check in",
+      "scanCheckOut": "Check out",
+      "done": "{{plate}}: {{status}}"
+    },
+    "ownerReviews": {
+      "title": "Reviews of your parkings",
+      "empty": "No reviews yet.",
+      "reply": "Your reply",
+      "submit": "Send reply",
+      "yourReply": "Your reply: {{reply}}"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "empty": "You have no notifications.",
+      "markRead": "Mark as read",
+      "markAllRead": "Mark all as read",
+      "unread_one": "{{count}} unread notification",
+      "unread_other": "{{count}} unread notifications",
+      "openTicket": "Open ticket",
+      "types": {
+        "booking_confirmed": "Booking confirmed",
+        "booking_cancelled": "Booking cancelled",
+        "booking_extended": "Booking extended",
+        "booking_checked_in": "Checked in",
+        "booking_completed": "Booking completed",
+        "booking_no_show": "Booking marked as no-show",
+        "review_reminder": "How was your parking? Leave a review."
+      }
+    },
+    "favorites": {
+      "title": "Saved parkings",
+      "empty": "You haven't saved any parkings yet.",
+      "save": "Save",
+      "saved": "Saved",
+      "remove": "Remove"
+    },
+    "errors": {
+      "validation_failed": "Check the fields and try again.",
+      "booking_not_found": "Booking not found.",
+      "location_not_found": "This parking is not available.",
+      "booking_invalid_period": "The booking time is not valid.",
+      "booking_customer_inactive": "Your account cannot make bookings.",
+      "booking_location_unavailable": "This parking is not taking bookings right now.",
+      "booking_space_mismatch": "Choose a space only for parkings that sell spaces.",
+      "booking_vehicle_not_owned": "This vehicle is not yours.",
+      "booking_vehicle_type_not_allowed": "This parking does not accept this vehicle type.",
+      "booking_outside_opening_hours": "The parking is closed for part of this time.",
+      "booking_space_unavailable": "This space is taken at this time.",
+      "booking_no_capacity": "The parking is full at this time.",
+      "booking_no_rate": "This parking has no price for this time.",
+      "booking_duration_out_of_range": "This booking is too short or too long for this parking.",
+      "booking_not_extendable": "Only confirmed or active bookings can be extended.",
+      "booking_invalid_transition": "The booking changed in the meantime. Refresh the page.",
+      "review_booking_not_eligible": "Only completed bookings can be reviewed.",
+      "review_already_exists": "This booking has already been reviewed.",
+      "ticket_not_found": "This ticket does not exist.",
+      "ticket_wrong_location": "This ticket is for another parking.",
+      "not_location_owner": "Only the owner of this parking can do this.",
+      "notification_not_found": "Notification not found."
+    }
+  }
+}
