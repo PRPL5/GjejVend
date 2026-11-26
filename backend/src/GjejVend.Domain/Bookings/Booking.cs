@@ -53,7 +53,7 @@ public sealed class Booking
         CancelledAt = at;
         CancelledBy = actorId;
         CancellationReason = reason;
-        return new(Id, CustomerId, LocationId, Reference, actorId, reason);
+        return new(Id, CustomerId, LocationId, Reference, actorId, reason, at);
     }
 
     public BookingCheckedIn CheckIn(DateTime at)

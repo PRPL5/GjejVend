@@ -177,6 +177,26 @@ public sealed class BookingApiTests(DatabaseApiFactory factory) : IClassFixture<
     }
 
     [Fact]
+    public async Task Cancelling_a_paid_booking_refunds_it_through_payments()
+    {
+        await using var connection = await factory.OpenAsync();
+        var location = await connection.CreateLocationAsync();
+        using var client = factory.ClientFor(await connection.CreateUserAsync());
+        var booking = await CreateAsync(client, location, DateTimeOffset.UtcNow.AddHours(25), 2);
+        await ConfirmAsync(booking);
+        var payment = await connection.ScalarAsync<Guid>(
+            "INSERT INTO payments (booking_id, customer_id, amount, provider, status) SELECT id, customer_id, total_amount, 'fake', 'succeeded' FROM bookings WHERE id = $1 RETURNING id",
+            booking);
+
+        using var cancel = await client.PostAsJsonAsync($"/bookings/{booking}/cancel", new { reason = (string?)null });
+
+        Assert.Equal(HttpStatusCode.NoContent, cancel.StatusCode);
+        Assert.Equal(
+            await connection.ScalarAsync<decimal>("SELECT total_amount FROM bookings WHERE id = $1", booking),
+            await connection.ScalarAsync<decimal>("SELECT coalesce(sum(amount), 0) FROM refunds WHERE payment_id = $1", payment));
+    }
+
+    [Fact]
     public async Task Owner_scans_ticket_to_check_in_and_out_and_other_lots_are_rejected()
     {
         await using var connection = await factory.OpenAsync();

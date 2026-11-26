@@ -15,6 +15,7 @@ public static class BookingsModule
             .AddScoped<IBookingEventObserver, NotificationObserver>()
             .AddScoped<IBookingEventObserver, ReviewReminderObserver>()
             .AddScoped<IBookingEventObserver, EmailNotificationObserver>()
+            .AddScoped<IBookingEventObserver, RefundObserver>()
             .AddScoped<BookingService>()
             .AddScoped<IBookingConfirmation>(provider => provider.GetRequiredService<BookingService>())
             .AddScoped<BookingDeskService>()

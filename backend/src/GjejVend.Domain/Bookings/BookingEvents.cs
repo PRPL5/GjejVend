@@ -8,7 +8,7 @@ public sealed record BookingCreated(Guid BookingId, Guid CustomerId, Guid Locati
 public sealed record BookingConfirmed(Guid BookingId, Guid CustomerId, Guid LocationId, string Reference)
     : BookingEvent(BookingId, CustomerId, LocationId, Reference);
 
-public sealed record BookingCancelled(Guid BookingId, Guid CustomerId, Guid LocationId, string Reference, Guid CancelledBy, string? Reason)
+public sealed record BookingCancelled(Guid BookingId, Guid CustomerId, Guid LocationId, string Reference, Guid CancelledBy, string? Reason, DateTime CancelledAt)
     : BookingEvent(BookingId, CustomerId, LocationId, Reference);
 
 public sealed record BookingExtended(Guid BookingId, Guid CustomerId, Guid LocationId, string Reference, DateTime EndsAt)

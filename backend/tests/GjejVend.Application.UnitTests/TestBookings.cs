@@ -15,5 +15,5 @@ internal static class TestBookings
     };
 
     public static BookingCancelled Cancelled(Booking booking) =>
-        new(booking.Id, booking.CustomerId, booking.LocationId, booking.Reference, booking.CustomerId, null);
+        new(booking.Id, booking.CustomerId, booking.LocationId, booking.Reference, booking.CustomerId, null, DateTime.UtcNow);
 }
