@@ -12,6 +12,7 @@
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="Testcontainers.PostgreSql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +21,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\GjejVend.Api\GjejVend.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\GjejVend.Infrastructure.IntegrationTests\SqlExtensions.cs" Link="Shared\SqlExtensions.cs" />
+    <Compile Include="..\GjejVend.Infrastructure.IntegrationTests\TestData.cs" Link="Shared\TestData.cs" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using GjejVend.Api.Workers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -10,7 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace GjejVend.Api.IntegrationTests;
 
-public sealed class ApiFactory : WebApplicationFactory<Program>
+public class ApiFactory : WebApplicationFactory<Program>
 {
     private const string Issuer = "https://test-project.supabase.co/auth/v1";
 
@@ -35,13 +36,26 @@ public sealed class ApiFactory : WebApplicationFactory<Program>
     {
         builder.UseSetting("ConnectionStrings:Default", "Host=localhost;Database=unused;Username=unused;Password=unused");
         builder.UseSetting("Supabase:Url", "https://test-project.supabase.co");
+        builder.UseSetting("Bookings:CloseOverdue", "false");
         builder.ConfigureTestServices(services =>
+        {
+            foreach (var worker in services.Where(d => d.ImplementationType == typeof(BookingLifecycleWorker)).ToList())
+            {
+                services.Remove(worker);
+            }
+
             services.PostConfigure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.Configuration = new OpenIdConnectConfiguration { Issuer = Issuer };
                 options.TokenValidationParameters.ValidIssuer = Issuer;
                 options.TokenValidationParameters.IssuerSigningKey = _signingKey;
-            }));
+            });
+            ConfigureServices(services);
+        });
+    }
+
+    protected virtual void ConfigureServices(IServiceCollection services)
+    {
     }
 
     protected override void Dispose(bool disposing)
