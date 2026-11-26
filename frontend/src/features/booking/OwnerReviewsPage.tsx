@@ -1,13 +1,16 @@
 import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { Schemas } from '@/api/client'
-import { Button } from '@/components/Button'
-import { EmptyState, ErrorMessage, Loading } from '@/components/Feedback'
+import { Button, Loading } from '@/components/ui'
+import { EmptyState, ErrorMessage } from '@/components/Feedback'
 import { TextAreaField } from '@/components/Field'
-import { useOwnerReviews, useRespondToReview } from '@/features/booking/api'
+import {
+  useOwnerReviews,
+  useRespondToReview,
+  type OwnerReview,
+} from '@/features/booking/bookingsApi'
 import { useFormat } from '@/features/booking/format'
 
-function ReviewItem({ review }: { review: Schemas['OwnerReviewView'] }) {
+function ReviewItem({ review }: { review: OwnerReview }) {
   const { t } = useTranslation('bookings')
   const format = useFormat()
   const respond = useRespondToReview()
@@ -26,11 +29,26 @@ function ReviewItem({ review }: { review: Schemas['OwnerReviewView'] }) {
       </p>
       <p className="text-sm text-ink-2">{format.dateTime(review.createdAt)}</p>
       {review.comment && <p>{review.comment}</p>}
-      {review.providerResponse && <p className="text-ink-2">{t('ownerReviews.yourReply', { reply: review.providerResponse })}</p>}
+      {review.providerResponse && (
+        <p className="text-ink-2">
+          {t('ownerReviews.yourReply', { reply: review.providerResponse })}
+        </p>
+      )}
       <form onSubmit={submit} className="flex flex-col gap-2">
-        <TextAreaField label={t('ownerReviews.reply')} value={reply} maxLength={1000} onChange={(e) => setReply(e.target.value)} required />
+        <TextAreaField
+          label={t('ownerReviews.reply')}
+          value={reply}
+          maxLength={1000}
+          onChange={(e) => setReply(e.target.value)}
+          required
+        />
         {respond.isError && <ErrorMessage error={respond.error} />}
-        <Button type="submit" loading={respond.isPending} className="self-start">
+        <Button
+          variant="secondary"
+          type="submit"
+          loading={respond.isPending}
+          className="self-start"
+        >
           {t('ownerReviews.submit')}
         </Button>
       </form>
@@ -43,7 +61,8 @@ export function OwnerReviewsPage() {
   const reviews = useOwnerReviews()
 
   if (reviews.isPending) return <Loading />
-  if (reviews.isError) return <ErrorMessage error={reviews.error} onRetry={() => void reviews.refetch()} />
+  if (reviews.isError)
+    return <ErrorMessage error={reviews.error} onRetry={() => void reviews.refetch()} />
 
   return (
     <div className="flex flex-col gap-6">

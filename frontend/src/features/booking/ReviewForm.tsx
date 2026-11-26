@@ -1,9 +1,9 @@
 import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@/components/Button'
+import { Button } from '@/components/ui'
 import { ErrorMessage } from '@/components/Feedback'
 import { TextAreaField } from '@/components/Field'
-import { useReviewBooking } from '@/features/booking/api'
+import { useReviewBooking } from '@/features/booking/bookingsApi'
 
 export function ReviewForm({ bookingId, onDone }: { bookingId: string; onDone: () => void }) {
   const { t } = useTranslation('bookings')
@@ -36,7 +36,12 @@ export function ReviewForm({ bookingId, onDone }: { bookingId: string; onDone: (
           ))}
         </div>
       </fieldset>
-      <TextAreaField label={t('review.comment')} value={comment} maxLength={1000} onChange={(e) => setComment(e.target.value)} />
+      <TextAreaField
+        label={t('review.comment')}
+        value={comment}
+        maxLength={1000}
+        onChange={(e) => setComment(e.target.value)}
+      />
       {review.isError && <ErrorMessage error={review.error} />}
       <Button type="submit" variant="primary" disabled={rating === 0} loading={review.isPending}>
         {t('review.submit')}

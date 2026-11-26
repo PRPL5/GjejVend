@@ -1,5 +1,7 @@
 using System.Security.Cryptography;
 using GjejVend.Api.Workers;
+using GjejVend.Infrastructure.Identity;
+using GjejVend.Infrastructure.Listings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -16,6 +18,8 @@ public class ApiFactory : WebApplicationFactory<Program>
     private const string Issuer = "https://test-project.supabase.co/auth/v1";
 
     private readonly ECDsaSecurityKey _signingKey = new(ECDsa.Create(ECCurve.NamedCurves.nistP256));
+
+    public InMemoryStore Store { get; } = new();
 
     public string CreateToken(Guid subject, string audience = "authenticated", DateTime? expires = null, SecurityKey? signingKey = null)
     {
@@ -50,6 +54,11 @@ public class ApiFactory : WebApplicationFactory<Program>
                 options.TokenValidationParameters.ValidIssuer = Issuer;
                 options.TokenValidationParameters.IssuerSigningKey = _signingKey;
             });
+
+            services.AddSingleton(Store);
+            services.AddScoped<IUserRoleRepository>(_ => Store);
+            services.AddScoped<IProviderRepository>(_ => Store);
+            services.AddScoped<IListingRepository>(_ => Store);
             ConfigureServices(services);
         });
     }

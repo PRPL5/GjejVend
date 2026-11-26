@@ -36,7 +36,7 @@ public sealed class BookingApiTests(DatabaseApiFactory factory) : IClassFixture<
         Assert.Equal(3, preview.GetProperty("freeCapacity").GetInt32());
         Assert.True(preview.GetProperty("isOpen").GetBoolean());
         Assert.Equal("01XYZ999", preview.GetProperty("defaultVehicle").GetProperty("plate").GetString());
-        Assert.Equal("suv", preview.GetProperty("defaultVehicle").GetProperty("vehicleType").GetString());
+        Assert.Equal("Suv", preview.GetProperty("defaultVehicle").GetProperty("vehicleType").GetString());
     }
 
     [Fact]
@@ -103,10 +103,10 @@ public sealed class BookingApiTests(DatabaseApiFactory factory) : IClassFixture<
         var confirmed = await client.GetFromJsonAsync<JsonElement>($"/bookings/{booking}");
         using var foreign = await stranger.GetAsync(new Uri($"/bookings/{booking}", UriKind.Relative));
 
-        Assert.Equal("pending", pending.GetProperty("status").GetString());
+        Assert.Equal("Pending", pending.GetProperty("status").GetString());
         Assert.Equal(JsonValueKind.Null, pending.GetProperty("accessInstructions").ValueKind);
         Assert.Equal(JsonValueKind.Null, pending.GetProperty("ticketToken").ValueKind);
-        Assert.Equal("confirmed", confirmed.GetProperty("status").GetString());
+        Assert.Equal("Confirmed", confirmed.GetProperty("status").GetString());
         Assert.Equal("Gate code 4321", confirmed.GetProperty("accessInstructions").GetString());
         Assert.False(string.IsNullOrEmpty(confirmed.GetProperty("ticketToken").GetString()));
         Assert.Equal(HttpStatusCode.NotFound, foreign.StatusCode);
@@ -165,7 +165,7 @@ public sealed class BookingApiTests(DatabaseApiFactory factory) : IClassFixture<
         var ticket = await client.GetFromJsonAsync<JsonElement>($"/bookings/{booking}");
 
         Assert.Equal(HttpStatusCode.NoContent, cancel.StatusCode);
-        Assert.Equal("cancelled", ticket.GetProperty("status").GetString());
+        Assert.Equal("Cancelled", ticket.GetProperty("status").GetString());
         Assert.Equal("Plans changed", ticket.GetProperty("cancellationReason").GetString());
         Assert.Equal(HttpStatusCode.Conflict, again.StatusCode);
         Assert.Equal(customer, await connection.ScalarAsync<Guid>("SELECT cancelled_by FROM bookings WHERE id = $1", booking));
@@ -197,8 +197,8 @@ public sealed class BookingApiTests(DatabaseApiFactory factory) : IClassFixture<
         Assert.Equal(HttpStatusCode.Conflict, wrongLot.StatusCode);
         Assert.Equal("ticket_wrong_location", await CodeAsync(wrongLot));
         Assert.Equal(HttpStatusCode.Forbidden, notOwner.StatusCode);
-        Assert.Equal("active", (await checkIn.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("status").GetString());
-        Assert.Equal("completed", (await checkOut.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("status").GetString());
+        Assert.Equal("Active", (await checkIn.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("status").GetString());
+        Assert.Equal("Completed", (await checkOut.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("status").GetString());
         Assert.True(await connection.ScalarAsync<bool>("SELECT checked_in_at IS NOT NULL AND checked_out_at IS NOT NULL FROM bookings WHERE id = $1", booking));
     }
 

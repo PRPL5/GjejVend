@@ -1,30 +1,39 @@
 import { useTranslation } from 'react-i18next'
 import type { Tone } from '@/components/Feedback'
-import { locales } from '@/i18n'
-import type { BookingStatus } from '@/features/booking/api'
+import type { BookingStatus } from '@/features/booking/bookingsApi'
+
+const locales: Record<string, string> = { sq: 'sq-AL', en: 'en-GB' }
 
 export const statusTones: Record<BookingStatus, Tone> = {
-  pending: 'warning',
-  confirmed: 'available',
-  active: 'ink',
-  completed: 'muted',
-  cancelled: 'danger',
-  expired: 'muted',
-  no_show: 'danger',
+  Pending: 'warning',
+  Confirmed: 'available',
+  Active: 'ink',
+  Completed: 'muted',
+  Cancelled: 'danger',
+  Expired: 'muted',
+  NoShow: 'danger',
 }
 
-export const openStatuses: BookingStatus[] = ['pending', 'confirmed', 'active']
+export const openStatuses: BookingStatus[] = ['Pending', 'Confirmed', 'Active']
 
 export function useFormat() {
   const { i18n } = useTranslation()
   const locale = locales[i18n.language] ?? 'sq-AL'
   return {
-    money: (amount: number, currency: string) => new Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount),
+    money: (amount: number, currency: string) =>
+      new Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount),
     dateTime: (value: string) =>
-      new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(
+      new Intl.DateTimeFormat(locale, {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(new Date(value)),
+    time: (value: string) =>
+      new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(
         new Date(value),
       ),
-    time: (value: string) => new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(new Date(value)),
   }
 }
 

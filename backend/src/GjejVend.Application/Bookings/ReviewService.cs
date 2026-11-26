@@ -1,5 +1,4 @@
 using FluentValidation;
-using GjejVend.Application.Common;
 using GjejVend.Domain.Bookings;
 using GjejVend.Domain.Common;
 using GjejVend.Domain.Reviews;

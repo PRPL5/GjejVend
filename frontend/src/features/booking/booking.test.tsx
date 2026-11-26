@@ -1,6 +1,6 @@
 import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import type { Schemas } from '@/api/client'
+import type { Schemas } from '@/features/booking/bookingsApi'
 import { json, mockApi, renderRoute, route } from '@/test-utils'
 
 const locationId = '11111111-1111-1111-1111-111111111111'
@@ -10,7 +10,7 @@ function ticket(overrides: Partial<Schemas['TicketView']> = {}): Schemas['Ticket
   return {
     id: bookingId,
     reference: 'GVAB12CD34',
-    status: 'confirmed',
+    status: 'Confirmed',
     locationId,
     locationName: 'Parkingu Qendra',
     addressLine: 'Rr. Agim Ramadani 1',
@@ -19,7 +19,7 @@ function ticket(overrides: Partial<Schemas['TicketView']> = {}): Schemas['Ticket
     arrivalInstructions: null,
     accessInstructions: 'Kodi i portës 4321',
     vehiclePlate: '01ABC123',
-    vehicleType: 'car',
+    vehicleType: 'Car',
     startsAt: new Date(Date.now() + 3_600_000).toISOString(),
     endsAt: new Date(Date.now() + 3 * 3_600_000).toISOString(),
     expiresAt: null,
@@ -45,7 +45,11 @@ function preview(overrides: Partial<Schemas['CheckoutPreview']> = {}): Schemas['
     totalAmount: 3,
     currency: 'EUR',
     minutes: 120,
-    defaultVehicle: { id: '33333333-3333-3333-3333-333333333333', plate: '01XYZ999', vehicleType: 'suv' },
+    defaultVehicle: {
+      id: '33333333-3333-3333-3333-333333333333',
+      plate: '01XYZ999',
+      vehicleType: 'Suv',
+    },
     ...overrides,
   }
 }
@@ -58,20 +62,22 @@ describe('checkout', () => {
     const calls = mockApi((request) => {
       if (route(request, 'GET', '/bookings/preview')) return json(preview())
       if (route(request, 'GET', '/me/favorites')) return json([])
-      if (route(request, 'POST', '/bookings')) return json(ticket({ status: 'pending', ticketToken: null }), 201)
-      if (route(request, 'GET', `/bookings/${bookingId}`)) return json(ticket({ status: 'pending', ticketToken: null }))
+      if (route(request, 'POST', '/bookings'))
+        return json(ticket({ status: 'Pending', ticketToken: null }), 201)
+      if (route(request, 'GET', `/bookings/${bookingId}`))
+        return json(ticket({ status: 'Pending', ticketToken: null }))
     })
     const { router } = renderRoute(`/checkout/${locationId}`)
 
     expect(await screen.findByText('4 vende të lira')).toBeInTheDocument()
     expect(screen.getByLabelText('Targa')).toHaveValue('01XYZ999')
-    expect(screen.getByLabelText('Lloji i automjetit')).toHaveValue('suv')
+    expect(screen.getByLabelText('Lloji i automjetit')).toHaveValue('Suv')
 
     await userEvent.click(screen.getByRole('button', { name: 'Rezervo' }))
 
-    await waitFor(() => expect(router.state.location.pathname).toBe(`/bookings/${bookingId}`))
+    await waitFor(() => expect(router.state.location.pathname).toBe(`/bookings/${bookingId}/pay`))
     const body = await calls.find((r) => route(r, 'POST', '/bookings'))!.json()
-    expect(body).toMatchObject({ locationId, vehiclePlate: '01XYZ999', vehicleType: 'suv' })
+    expect(body).toMatchObject({ locationId, vehiclePlate: '01XYZ999', vehicleType: 'Suv' })
   })
 
   test('shows a full lot and blocks booking', async () => {
@@ -89,7 +95,8 @@ describe('checkout', () => {
     mockApi((request) => {
       if (route(request, 'GET', '/bookings/preview')) return json(preview())
       if (route(request, 'GET', '/me/favorites')) return json([])
-      if (route(request, 'POST', '/bookings')) return json({ code: 'booking_no_capacity', title: 'Full' }, 409)
+      if (route(request, 'POST', '/bookings'))
+        return json({ code: 'booking_no_capacity', title: 'Full' }, 409)
     })
     renderRoute(`/checkout/${locationId}`)
 
@@ -101,14 +108,19 @@ describe('checkout', () => {
 
 describe('ticket', () => {
   test('shows QR, access instructions and countdown for a confirmed booking', async () => {
-    mockApi((request) => (route(request, 'GET', `/bookings/${bookingId}`) ? json(ticket()) : undefined))
+    mockApi((request) =>
+      route(request, 'GET', `/bookings/${bookingId}`) ? json(ticket()) : undefined,
+    )
     renderRoute(`/bookings/${bookingId}`)
 
     expect(await screen.findByText('E konfirmuar')).toBeInTheDocument()
     expect(screen.getByTitle('Tregojeni këtë kod te hyrja.')).toBeInTheDocument()
     expect(screen.getByText('Kodi i portës 4321')).toBeInTheDocument()
     expect(screen.getByText(/^Fillon pas/)).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Navigo' })).toHaveAttribute('href', expect.stringContaining('42.66,21.16'))
+    expect(screen.getByRole('link', { name: 'Navigo' })).toHaveAttribute(
+      'href',
+      expect.stringContaining('42.66,21.16'),
+    )
   })
 
   test('shows the last saved ticket when offline', async () => {
@@ -118,7 +130,9 @@ describe('ticket', () => {
     })
     renderRoute(`/bookings/${bookingId}`)
 
-    expect(await screen.findByText('Pa lidhje. Po shihni të dhënat e fundit të ruajtura.')).toBeInTheDocument()
+    expect(
+      await screen.findByText('Pa lidhje. Po shihni të dhënat e fundit të ruajtura.'),
+    ).toBeInTheDocument()
     expect(screen.getByText('Parkingu Qendra')).toBeInTheDocument()
   })
 
@@ -127,7 +141,12 @@ describe('ticket', () => {
     const calls = mockApi((request) => {
       if (route(request, 'GET', `/bookings/${bookingId}`)) return json(current)
       if (route(request, 'POST', `/bookings/${bookingId}/cancel`)) {
-        current = ticket({ status: 'cancelled', ticketToken: null, accessInstructions: null, cancellationReason: 'Ndryshim plani' })
+        current = ticket({
+          status: 'Cancelled',
+          ticketToken: null,
+          accessInstructions: null,
+          cancellationReason: 'Ndryshim plani',
+        })
         return json(null, 204)
       }
     })
@@ -139,13 +158,17 @@ describe('ticket', () => {
     await userEvent.click(within(sheet).getByRole('button', { name: 'Po, anuloje' }))
 
     expect(await screen.findByText('E anuluar')).toBeInTheDocument()
-    expect(await calls.find((r) => route(r, 'POST', `/bookings/${bookingId}/cancel`))!.json()).toEqual({ reason: 'Ndryshim plani' })
+    expect(
+      await calls.find((r) => route(r, 'POST', `/bookings/${bookingId}/cancel`))!.json(),
+    ).toEqual({ reason: 'Ndryshim plani' })
   })
 
   test('asks for a review after a completed booking', async () => {
     const calls = mockApi((request) => {
-      if (route(request, 'GET', `/bookings/${bookingId}`)) return json(ticket({ status: 'completed', ticketToken: null }))
-      if (route(request, 'POST', `/bookings/${bookingId}/review`)) return json({ id: 'r1', rating: 5 }, 201)
+      if (route(request, 'GET', `/bookings/${bookingId}`))
+        return json(ticket({ status: 'Completed', ticketToken: null }))
+      if (route(request, 'POST', `/bookings/${bookingId}/review`))
+        return json({ id: 'r1', rating: 5 }, 201)
     })
     renderRoute(`/bookings/${bookingId}`)
 
@@ -153,7 +176,9 @@ describe('ticket', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Dërgo vlerësimin' }))
 
     expect(await screen.findByText('Faleminderit për vlerësimin.')).toBeInTheDocument()
-    expect(await calls.find((r) => route(r, 'POST', `/bookings/${bookingId}/review`))!.json()).toEqual({ rating: 5, comment: null })
+    expect(
+      await calls.find((r) => route(r, 'POST', `/bookings/${bookingId}/review`))!.json(),
+    ).toEqual({ rating: 5, comment: null })
   })
 })
 
@@ -162,16 +187,21 @@ describe('lists', () => {
     mockApi((request) =>
       route(request, 'GET', '/bookings')
         ? json([
-            { ...ticket(), id: 'a', status: 'confirmed', locationName: 'Lot A' },
-            { ...ticket(), id: 'b', status: 'completed', locationName: 'Lot B' },
+            { ...ticket(), id: 'a', status: 'Confirmed', locationName: 'Lot A' },
+            { ...ticket(), id: 'b', status: 'Completed', locationName: 'Lot B' },
           ])
         : undefined,
     )
     renderRoute('/bookings')
 
-    const upcoming = (await screen.findByRole('heading', { name: 'Të ardhshme' })).closest('section')!
+    const upcoming = (await screen.findByRole('heading', { name: 'Të ardhshme' })).closest(
+      'section',
+    )!
     const past = screen.getByRole('heading', { name: 'Të kaluara' }).closest('section')!
-    expect(within(upcoming).getByRole('link', { name: /Lot A/ })).toHaveAttribute('href', '/bookings/a')
+    expect(within(upcoming).getByRole('link', { name: /Lot A/ })).toHaveAttribute(
+      'href',
+      '/bookings/a',
+    )
     expect(within(past).getByText('E përfunduar')).toBeInTheDocument()
   })
 
@@ -212,12 +242,14 @@ describe('lists', () => {
     expect(await screen.findByText('Rezervimi u anulua')).toBeInTheDocument()
     await userEvent.click(screen.getByRole('button', { name: 'Shëno si të lexuar' }))
 
-    await waitFor(() => expect(screen.queryByRole('button', { name: 'Shëno si të lexuar' })).not.toBeInTheDocument())
+    await waitFor(() =>
+      expect(screen.queryByRole('button', { name: 'Shëno si të lexuar' })).not.toBeInTheDocument(),
+    )
     expect(calls.some((r) => route(r, 'POST', '/me/notifications/n1/read'))).toBe(true)
   })
 
   test('owner checks in an arrival', async () => {
-    let status: Schemas['BookingStatus'] = 'confirmed'
+    let status: Schemas['BookingStatus'] = 'Confirmed'
     const arrival = () => ({
       id: bookingId,
       reference: 'GVAB12CD34',
@@ -225,7 +257,7 @@ describe('lists', () => {
       locationId,
       locationName: 'Parkingu Qendra',
       vehiclePlate: '01ABC123',
-      vehicleType: 'car',
+      vehicleType: 'Car',
       startsAt: new Date().toISOString(),
       endsAt: new Date(Date.now() + 3_600_000).toISOString(),
       checkedInAt: null,
@@ -234,7 +266,7 @@ describe('lists', () => {
     mockApi((request) => {
       if (route(request, 'GET', '/owner/arrivals')) return json([arrival()])
       if (route(request, 'POST', `/bookings/${bookingId}/check-in`)) {
-        status = 'active'
+        status = 'Active'
         return json(arrival())
       }
     })

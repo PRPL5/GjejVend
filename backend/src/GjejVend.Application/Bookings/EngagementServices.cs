@@ -1,4 +1,3 @@
-using GjejVend.Application.Common;
 using GjejVend.Domain.Common;
 using GjejVend.Infrastructure.Bookings;
 using GjejVend.Infrastructure.Persistence;

@@ -4,6 +4,464 @@
  */
 
 export interface paths {
+    "/api/admin/verifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    status?: components["schemas"]["VerificationRequestStatus"];
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["VerificationItem"][];
+                        "application/json": components["schemas"]["VerificationItem"][];
+                        "text/json": components["schemas"]["VerificationItem"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/verifications/{id}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ReviewVerificationRequest"];
+                    "text/json": components["schemas"]["ReviewVerificationRequest"];
+                    "application/*+json": components["schemas"]["ReviewVerificationRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["VerificationItem"];
+                        "application/json": components["schemas"]["VerificationItem"];
+                        "text/json": components["schemas"]["VerificationItem"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/reports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    status?: components["schemas"]["ReportStatus"];
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ReportItem"][];
+                        "application/json": components["schemas"]["ReportItem"][];
+                        "text/json": components["schemas"]["ReportItem"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/reports/{id}/resolve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ResolveReportRequest"];
+                    "text/json": components["schemas"]["ResolveReportRequest"];
+                    "application/*+json": components["schemas"]["ResolveReportRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ReportItem"];
+                        "application/json": components["schemas"]["ReportItem"];
+                        "text/json": components["schemas"]["ReportItem"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/audit-logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    actorId?: string;
+                    entityType?: string;
+                    entityId?: string;
+                    from?: string;
+                    to?: string;
+                    page?: number;
+                    pageSize?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["AuditLogItemPagedResult"];
+                        "application/json": components["schemas"]["AuditLogItemPagedResult"];
+                        "text/json": components["schemas"]["AuditLogItemPagedResult"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["PlatformSettingsView"];
+                        "application/json": components["schemas"]["PlatformSettingsView"];
+                        "text/json": components["schemas"]["PlatformSettingsView"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/settings/commission-rate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["SetCommissionRequest"];
+                    "text/json": components["schemas"]["SetCommissionRequest"];
+                    "application/*+json": components["schemas"]["SetCommissionRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["PlatformSettingsView"];
+                        "application/json": components["schemas"]["PlatformSettingsView"];
+                        "text/json": components["schemas"]["PlatformSettingsView"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/settings/refund-policy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["SetRefundPolicyRequest"];
+                    "text/json": components["schemas"]["SetRefundPolicyRequest"];
+                    "application/*+json": components["schemas"]["SetRefundPolicyRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["PlatformSettingsView"];
+                        "application/json": components["schemas"]["PlatformSettingsView"];
+                        "text/json": components["schemas"]["PlatformSettingsView"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/commission-summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    from?: string;
+                    to?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["EarningsSummary"];
+                        "application/json": components["schemas"]["EarningsSummary"];
+                        "text/json": components["schemas"]["EarningsSummary"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/payouts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    status?: components["schemas"]["PayoutStatus"];
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["PayoutDto"][];
+                        "application/json": components["schemas"]["PayoutDto"][];
+                        "text/json": components["schemas"]["PayoutDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/payouts/run": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["RunPayoutsRequest"];
+                    "text/json": components["schemas"]["RunPayoutsRequest"];
+                    "application/*+json": components["schemas"]["RunPayoutsRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["PayoutRunItem"][];
+                        "application/json": components["schemas"]["PayoutRunItem"][];
+                        "text/json": components["schemas"]["PayoutRunItem"][];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/bookings/preview": {
         parameters: {
             query?: never;
@@ -534,6 +992,173 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/listings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ListingRequest"];
+                    "text/json": components["schemas"]["ListingRequest"];
+                    "application/*+json": components["schemas"]["ListingRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ListingResponse"];
+                        "application/json": components["schemas"]["ListingResponse"];
+                        "text/json": components["schemas"]["ListingResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/listings/mine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ListingResponse"][];
+                        "application/json": components["schemas"]["ListingResponse"][];
+                        "text/json": components["schemas"]["ListingResponse"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/listings/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ListingResponse"];
+                        "application/json": components["schemas"]["ListingResponse"];
+                        "text/json": components["schemas"]["ListingResponse"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ListingRequest"];
+                    "text/json": components["schemas"]["ListingRequest"];
+                    "application/*+json": components["schemas"]["ListingRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ListingResponse"];
+                        "application/json": components["schemas"]["ListingResponse"];
+                        "text/json": components["schemas"]["ListingResponse"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/me": {
         parameters: {
             query?: never;
@@ -753,6 +1378,463 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/owner/earnings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    from?: string;
+                    to?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["EarningsSummary"];
+                        "application/json": components["schemas"]["EarningsSummary"];
+                        "text/json": components["schemas"]["EarningsSummary"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/owner/stripe/onboarding": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["OnboardingRequest"];
+                    "text/json": components["schemas"]["OnboardingRequest"];
+                    "application/*+json": components["schemas"]["OnboardingRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["OnboardingLink"];
+                        "application/json": components["schemas"]["OnboardingLink"];
+                        "text/json": components["schemas"]["OnboardingLink"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/owner/payouts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["PayoutDto"][];
+                        "application/json": components["schemas"]["PayoutDto"][];
+                        "text/json": components["schemas"]["PayoutDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/payments/bookings/{bookingId}/pay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    bookingId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["PayBookingResult"];
+                        "application/json": components["schemas"]["PayBookingResult"];
+                        "text/json": components["schemas"]["PayBookingResult"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/payments/bookings/{bookingId}/refund-preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    bookingId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["RefundPreview"];
+                        "application/json": components["schemas"]["RefundPreview"];
+                        "text/json": components["schemas"]["RefundPreview"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/payments/invoices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["PaidBookingSummary"][];
+                        "application/json": components["schemas"]["PaidBookingSummary"][];
+                        "text/json": components["schemas"]["PaidBookingSummary"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/payments/bookings/{bookingId}/invoice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    bookingId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["BookingInvoice"];
+                        "application/json": components["schemas"]["BookingInvoice"];
+                        "text/json": components["schemas"]["BookingInvoice"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/payments/webhook": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/providers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ProviderRequest"];
+                    "text/json": components["schemas"]["ProviderRequest"];
+                    "application/*+json": components["schemas"]["ProviderRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProviderResponse"];
+                        "application/json": components["schemas"]["ProviderResponse"];
+                        "text/json": components["schemas"]["ProviderResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/providers/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProviderResponse"];
+                        "application/json": components["schemas"]["ProviderResponse"];
+                        "text/json": components["schemas"]["ProviderResponse"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ProviderRequest"];
+                    "text/json": components["schemas"]["ProviderRequest"];
+                    "application/*+json": components["schemas"]["ProviderRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProviderResponse"];
+                        "application/json": components["schemas"]["ProviderResponse"];
+                        "text/json": components["schemas"]["ProviderResponse"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/reports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["CreateReportRequest"];
+                    "text/json": components["schemas"]["CreateReportRequest"];
+                    "application/*+json": components["schemas"]["CreateReportRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ReportItem"];
+                        "application/json": components["schemas"]["ReportItem"];
+                        "text/json": components["schemas"]["ReportItem"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/reviews": {
         parameters: {
             query?: never;
@@ -843,181 +1925,451 @@ export interface components {
     schemas: {
         ArrivalView: {
             /** Format: uuid */
-            id: string;
-            reference: string;
-            status: components["schemas"]["BookingStatus"];
+            id?: string;
+            reference?: string | null;
+            status?: components["schemas"]["BookingStatus"];
             /** Format: uuid */
-            locationId: string;
-            locationName: string;
-            vehiclePlate: string;
-            vehicleType: components["schemas"]["VehicleType"];
+            locationId?: string;
+            locationName?: string | null;
+            vehiclePlate?: string | null;
+            vehicleType?: components["schemas"]["VehicleType"];
             /** Format: date-time */
-            startsAt: string;
+            startsAt?: string;
             /** Format: date-time */
-            endsAt: string;
+            endsAt?: string;
             /** Format: date-time */
             checkedInAt?: string | null;
             /** Format: date-time */
             checkedOutAt?: string | null;
         };
+        AuditLogItem: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            actorId?: string | null;
+            action?: string | null;
+            entityType?: string | null;
+            /** Format: uuid */
+            entityId?: string | null;
+            metadata?: string | null;
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        AuditLogItemPagedResult: {
+            items?: components["schemas"]["AuditLogItem"][] | null;
+            /** Format: int32 */
+            page?: number;
+            /** Format: int32 */
+            pageSize?: number;
+            /** Format: int32 */
+            total?: number;
+        };
+        BookingInvoice: {
+            /** Format: uuid */
+            bookingId?: string;
+            /** Format: uuid */
+            paymentId?: string;
+            /** Format: double */
+            amount?: number;
+            currency?: string | null;
+            /** Format: date-time */
+            paidAt?: string | null;
+            number?: string | null;
+            hostedUrl?: string | null;
+            pdfUrl?: string | null;
+        };
         /** @enum {string} */
-        BookingStatus: "pending" | "confirmed" | "active" | "completed" | "cancelled" | "expired" | "no_show";
+        BookingStatus: "Pending" | "Confirmed" | "Active" | "Completed" | "Cancelled" | "Expired" | "NoShow";
         BookingSummary: {
             /** Format: uuid */
-            id: string;
-            reference: string;
-            status: components["schemas"]["BookingStatus"];
-            locationName: string;
-            vehiclePlate: string;
+            id?: string;
+            reference?: string | null;
+            status?: components["schemas"]["BookingStatus"];
+            locationName?: string | null;
+            vehiclePlate?: string | null;
             /** Format: date-time */
-            startsAt: string;
+            startsAt?: string;
             /** Format: date-time */
-            endsAt: string;
+            endsAt?: string;
             /** Format: double */
-            totalAmount: number;
-            currency: string;
+            totalAmount?: number;
+            currency?: string | null;
         };
         CancelBookingRequest: {
             reason?: string | null;
         };
         CheckoutPreview: {
             /** Format: uuid */
-            locationId: string;
-            locationName: string;
-            addressLine: string;
-            isOpen: boolean;
+            locationId?: string;
+            locationName?: string | null;
+            addressLine?: string | null;
+            isOpen?: boolean;
             /** Format: int32 */
-            freeCapacity: number;
+            freeCapacity?: number;
             /** Format: double */
-            totalAmount: number;
-            currency: string;
+            totalAmount?: number;
+            currency?: string | null;
             /** Format: int32 */
-            minutes: number;
-            defaultVehicle: components["schemas"]["DefaultVehicle"];
+            minutes?: number;
+            defaultVehicle?: components["schemas"]["DefaultVehicle"];
         };
         CreateBookingRequest: {
             /** Format: uuid */
-            locationId: string;
+            locationId?: string;
             /** Format: date-time */
-            startsAt: string;
+            startsAt?: string;
             /** Format: date-time */
-            endsAt: string;
-            vehiclePlate: string;
-            vehicleType: components["schemas"]["VehicleType"];
+            endsAt?: string;
+            vehiclePlate?: string | null;
+            vehicleType?: components["schemas"]["VehicleType"];
             /** Format: uuid */
             spaceId?: string | null;
             /** Format: uuid */
             vehicleId?: string | null;
         };
+        CreateReportRequest: {
+            /** Format: uuid */
+            locationId?: string | null;
+            /** Format: uuid */
+            reportedUserId?: string | null;
+            /** Format: uuid */
+            reviewId?: string | null;
+            category?: components["schemas"]["ReportCategory"];
+            description?: string | null;
+        };
         DefaultVehicle: {
             /** Format: uuid */
-            id: string;
-            plate: string;
-            vehicleType: components["schemas"]["VehicleType"];
+            id?: string;
+            plate?: string | null;
+            vehicleType?: components["schemas"]["VehicleType"];
+        };
+        EarningsSummary: {
+            /** Format: date-time */
+            from?: string;
+            /** Format: date-time */
+            to?: string;
+            currency?: string | null;
+            /** Format: double */
+            gross?: number;
+            /** Format: double */
+            refunded?: number;
+            /** Format: double */
+            commission?: number;
+            /** Format: double */
+            net?: number;
+            /** Format: double */
+            paidOut?: number;
+            /** Format: double */
+            balance?: number;
+            /** Format: int32 */
+            paidBookings?: number;
         };
         ExtendBookingRequest: {
             /** Format: date-time */
-            endsAt: string;
+            endsAt?: string;
         };
         FavoriteView: {
             /** Format: uuid */
-            locationId: string;
-            name: string;
-            slug: string;
-            addressLine: string;
+            locationId?: string;
+            name?: string | null;
+            slug?: string | null;
+            addressLine?: string | null;
             neighbourhood?: string | null;
             /** Format: double */
             ratingAverage?: number | null;
             /** Format: date-time */
-            savedAt: string;
+            savedAt?: string;
         };
+        /** @enum {string} */
+        InventoryMode: "Capacity" | "Spaces";
+        ListingRequest: {
+            name?: string | null;
+            description?: string | null;
+            addressLine?: string | null;
+            neighbourhood?: string | null;
+            city?: string | null;
+            postalCode?: string | null;
+            /** Format: double */
+            latitude?: number;
+            /** Format: double */
+            longitude?: number;
+            parkingType?: components["schemas"]["ParkingType"];
+            inventoryMode?: components["schemas"]["InventoryMode"];
+            /** Format: int32 */
+            totalCapacity?: number;
+            arrivalInstructions?: string | null;
+            accessInstructions?: string | null;
+            contactPhone?: string | null;
+        };
+        ListingResponse: {
+            /** Format: uuid */
+            id?: string;
+            name?: string | null;
+            slug?: string | null;
+            description?: string | null;
+            addressLine?: string | null;
+            neighbourhood?: string | null;
+            city?: string | null;
+            postalCode?: string | null;
+            /** Format: double */
+            latitude?: number;
+            /** Format: double */
+            longitude?: number;
+            parkingType?: components["schemas"]["ParkingType"];
+            inventoryMode?: components["schemas"]["InventoryMode"];
+            /** Format: int32 */
+            totalCapacity?: number;
+            arrivalInstructions?: string | null;
+            accessInstructions?: string | null;
+            contactPhone?: string | null;
+            listingStatus?: components["schemas"]["ListingStatus"];
+            verificationStatus?: components["schemas"]["VerificationStatus"];
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        /** @enum {string} */
+        ListingStatus: "Draft" | "PendingReview" | "Published" | "Suspended";
         LocationReviewView: {
             /** Format: uuid */
-            id: string;
+            id?: string;
             /** Format: int32 */
-            rating: number;
+            rating?: number;
             comment?: string | null;
             providerResponse?: string | null;
             /** Format: date-time */
-            createdAt: string;
+            createdAt?: string;
         };
         MeResponse: {
             /** Format: uuid */
-            id: string;
+            id?: string;
+            roles?: components["schemas"]["Role"][] | null;
         };
         NotificationList: {
-            items: components["schemas"]["NotificationView"][];
+            items?: components["schemas"]["NotificationView"][] | null;
             /** Format: int32 */
-            unreadCount: number;
+            unreadCount?: number;
         };
         NotificationView: {
             /** Format: uuid */
-            id: string;
-            type: string;
-            title: string;
-            body: string;
+            id?: string;
+            type?: string | null;
+            title?: string | null;
+            body?: string | null;
             entityType?: string | null;
             /** Format: uuid */
             entityId?: string | null;
             /** Format: date-time */
             readAt?: string | null;
             /** Format: date-time */
-            createdAt: string;
+            createdAt?: string;
+        };
+        OnboardingLink: {
+            /** Format: uuid */
+            providerId?: string;
+            url?: string | null;
+        };
+        OnboardingRequest: {
+            /** Format: uuid */
+            providerId?: string | null;
         };
         OwnerReviewView: {
             /** Format: uuid */
-            id: string;
+            id?: string;
             /** Format: uuid */
-            locationId: string;
-            locationName: string;
+            locationId?: string;
+            locationName?: string | null;
             /** Format: int32 */
-            rating: number;
+            rating?: number;
             comment?: string | null;
             providerResponse?: string | null;
             /** Format: date-time */
             respondedAt?: string | null;
             /** Format: date-time */
-            createdAt: string;
+            createdAt?: string;
+        };
+        PaidBookingSummary: {
+            /** Format: uuid */
+            bookingId?: string;
+            /** Format: uuid */
+            paymentId?: string;
+            /** Format: double */
+            amount?: number;
+            currency?: string | null;
+            /** Format: date-time */
+            paidAt?: string | null;
+            status?: string | null;
+        };
+        /** @enum {string} */
+        ParkingType: "PrivateSpace" | "OutdoorLot" | "Indoor" | "Garage" | "Commercial";
+        PayBookingResult: {
+            /** Format: uuid */
+            paymentId?: string;
+            reference?: string | null;
+            checkoutUrl?: string | null;
+            /** Format: double */
+            amount?: number;
+            currency?: string | null;
+        };
+        PayoutDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            providerId?: string;
+            providerName?: string | null;
+            /** Format: double */
+            amount?: number;
+            currency?: string | null;
+            /** Format: date */
+            periodStart?: string;
+            /** Format: date */
+            periodEnd?: string;
+            status?: string | null;
+            /** Format: date-time */
+            paidAt?: string | null;
+        };
+        PayoutRunItem: {
+            /** Format: uuid */
+            providerId?: string;
+            providerName?: string | null;
+            outcome?: string | null;
+            /** Format: double */
+            amount?: number;
+            detail?: string | null;
+        };
+        /** @enum {string} */
+        PayoutStatus: "Pending" | "Processing" | "Paid" | "Failed";
+        PlatformSettingsView: {
+            /** Format: double */
+            commissionRate?: number;
+            refundPolicy?: string | null;
+            availableRefundPolicies?: string[] | null;
+        };
+        ProviderRequest: {
+            providerType?: components["schemas"]["ProviderType"];
+            displayName?: string | null;
+            legalName?: string | null;
+            taxNumber?: string | null;
+            description?: string | null;
+            contactEmail?: string | null;
+            contactPhone?: string | null;
+        };
+        ProviderResponse: {
+            /** Format: uuid */
+            id?: string;
+            providerType?: components["schemas"]["ProviderType"];
+            displayName?: string | null;
+            legalName?: string | null;
+            taxNumber?: string | null;
+            description?: string | null;
+            contactEmail?: string | null;
+            contactPhone?: string | null;
+            verificationStatus?: components["schemas"]["VerificationStatus"];
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        /** @enum {string} */
+        ProviderType: "Individual" | "Business";
+        RefundPreview: {
+            /** Format: uuid */
+            bookingId?: string;
+            policy?: string | null;
+            /** Format: double */
+            paidAmount?: number;
+            /** Format: double */
+            refundAmount?: number;
+            currency?: string | null;
+            reason?: string | null;
+        };
+        /** @enum {string} */
+        ReportAction: "Dismiss" | "Resolve" | "HideReview" | "SuspendLot";
+        /** @enum {string} */
+        ReportCategory: "Inaccurate" | "Safety" | "Fraud" | "Inappropriate" | "Other";
+        ReportItem: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            reporterId?: string;
+            /** Format: uuid */
+            locationId?: string | null;
+            /** Format: uuid */
+            reportedUserId?: string | null;
+            /** Format: uuid */
+            reviewId?: string | null;
+            category?: string | null;
+            description?: string | null;
+            status?: string | null;
+            resolution?: string | null;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            resolvedAt?: string | null;
+        };
+        /** @enum {string} */
+        ReportStatus: "Open" | "Reviewing" | "Resolved" | "Dismissed";
+        ResolveReportRequest: {
+            action?: components["schemas"]["ReportAction"];
+            resolution?: string | null;
         };
         ReviewRequest: {
             /** Format: int32 */
-            rating: number;
+            rating?: number;
             comment?: string | null;
         };
         ReviewResponseRequest: {
-            response: string;
+            response?: string | null;
+        };
+        ReviewVerificationRequest: {
+            approve?: boolean;
+            notes?: string | null;
+        };
+        /** @enum {string} */
+        Role: "Customer" | "Provider" | "Admin";
+        RunPayoutsRequest: {
+            /** Format: date */
+            periodStart?: string;
+            /** Format: date */
+            periodEnd?: string;
+        };
+        SetCommissionRequest: {
+            /** Format: double */
+            rate?: number;
+        };
+        SetRefundPolicyRequest: {
+            policy?: string | null;
         };
         TicketScanRequest: {
             /** Format: uuid */
-            locationId: string;
-            token: string;
+            locationId?: string;
+            token?: string | null;
         };
         TicketView: {
             /** Format: uuid */
-            id: string;
-            reference: string;
-            status: components["schemas"]["BookingStatus"];
+            id?: string;
+            reference?: string | null;
+            status?: components["schemas"]["BookingStatus"];
             /** Format: uuid */
-            locationId: string;
-            locationName: string;
-            addressLine: string;
+            locationId?: string;
+            locationName?: string | null;
+            addressLine?: string | null;
             /** Format: double */
-            latitude: number;
+            latitude?: number;
             /** Format: double */
-            longitude: number;
+            longitude?: number;
             arrivalInstructions?: string | null;
             accessInstructions?: string | null;
-            vehiclePlate: string;
-            vehicleType: components["schemas"]["VehicleType"];
+            vehiclePlate?: string | null;
+            vehicleType?: components["schemas"]["VehicleType"];
             /** Format: date-time */
-            startsAt: string;
+            startsAt?: string;
             /** Format: date-time */
-            endsAt: string;
+            endsAt?: string;
             /** Format: date-time */
             expiresAt?: string | null;
             /** Format: double */
-            totalAmount: number;
-            currency: string;
+            totalAmount?: number;
+            currency?: string | null;
             ticketToken?: string | null;
             /** Format: date-time */
             checkedInAt?: string | null;
@@ -1026,10 +2378,31 @@ export interface components {
             /** Format: date-time */
             cancelledAt?: string | null;
             cancellationReason?: string | null;
-            hasReview: boolean;
+            hasReview?: boolean;
         };
         /** @enum {string} */
-        VehicleType: "car" | "motorcycle" | "van" | "suv";
+        VehicleType: "Car" | "Motorcycle" | "Van" | "Suv";
+        VerificationItem: {
+            /** Format: uuid */
+            id?: string;
+            targetType?: string | null;
+            /** Format: uuid */
+            targetId?: string;
+            targetName?: string | null;
+            /** Format: uuid */
+            submittedBy?: string;
+            documentPaths?: string[] | null;
+            status?: string | null;
+            reviewNotes?: string | null;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            reviewedAt?: string | null;
+        };
+        /** @enum {string} */
+        VerificationRequestStatus: "Pending" | "Approved" | "Rejected";
+        /** @enum {string} */
+        VerificationStatus: "Unverified" | "Pending" | "Verified" | "Rejected";
     };
     responses: never;
     parameters: never;

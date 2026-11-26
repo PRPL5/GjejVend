@@ -7,6 +7,7 @@ public static class BookingsInfrastructure
     public static IServiceCollection AddBookingsInfrastructure(this IServiceCollection services) =>
         services
             .AddScoped<IBookingRepository, BookingRepository>()
+            .AddScoped<IBookingAvailabilityQueries, BookingAvailabilityQueries>()
             .AddScoped<IReviewRepository, ReviewRepository>()
             .AddScoped<IFavoriteRepository, FavoriteRepository>()
             .AddScoped<INotificationRepository, NotificationRepository>()

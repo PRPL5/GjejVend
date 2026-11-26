@@ -1,174 +1,191 @@
 {
   "common": {
-    "appName": "GjejVend",
-    "tagline": "Find your parking in Pristina.",
-    "nav": {
-      "bookings": "Bookings",
-      "favorites": "Saved",
-      "notifications": "Notifications",
-      "arrivals": "Arrivals",
-      "ownerReviews": "Reviews",
-      "language": "Shqip"
-    },
     "loading": "Loading…",
     "retry": "Try again",
+    "save": "Save",
+    "cancel": "Cancel",
     "close": "Close",
-    "signInRequired": "Sign in to continue.",
+    "none": "Nothing here yet.",
     "errors": {
-      "network": "Can't reach the server. Check your connection and try again.",
-      "unauthorized": "Your session has expired. Sign in again.",
-      "notFound": "Not found.",
-      "unknown": "Something went wrong. Try again."
+      "network": "We could not reach the server. Check your connection and try again.",
+      "forbidden": "You do not have access to this page.",
+      "unauthorized": "Sign in to continue.",
+      "generic": "Something went wrong. Please try again."
     }
   },
-  "bookings": {
+  "nav": {
+    "home": "Home",
+    "invoices": "Invoices",
+    "owner": "Owner dashboard",
+    "adminSettings": "Commission",
+    "adminPayouts": "Payouts",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "admin": "Admin",
+    "adminVerifications": "Verifications",
+    "adminReports": "Reports",
+    "adminAudit": "Audit log"
+  },
+  "payment": {
+    "title": "Pay for your booking",
+    "payNow": "Pay now",
+    "payAmount": "Pay {{amount}}",
+    "redirecting": "Taking you to secure checkout…",
+    "success": "Payment received. We are confirming your booking.",
+    "successHint": "Your invoice will be ready in a moment.",
+    "cancelled": "The payment was cancelled. You can try again while your booking is held.",
+    "viewInvoices": "View invoices",
+    "failed": "The payment did not go through.",
+    "secure": "Payments are processed securely by Stripe."
+  },
+  "invoices": {
+    "title": "Invoices",
+    "empty": "You have no paid bookings yet.",
+    "booking": "Booking {{id}}",
+    "paidOn": "Paid on {{date}}",
+    "open": "Open invoice",
+    "pdf": "PDF",
+    "notReady": "The invoice is not ready yet. Try again in a moment.",
     "status": {
-      "pending": "Awaiting payment",
-      "confirmed": "Confirmed",
-      "active": "Parked",
-      "completed": "Completed",
-      "cancelled": "Cancelled",
-      "expired": "Expired",
-      "no_show": "No-show"
+      "Succeeded": "Paid",
+      "PartiallyRefunded": "Partly refunded",
+      "Refunded": "Refunded"
+    }
+  },
+  "owner": {
+    "title": "Owner dashboard",
+    "today": "Today",
+    "week": "Last 7 days",
+    "net": "Your earnings",
+    "gross": "Paid by drivers",
+    "commission": "Platform commission",
+    "refunded": "Refunded",
+    "bookings": "{{count}} paid bookings",
+    "payouts": "Payouts",
+    "noPayouts": "No payouts yet.",
+    "period": "Period",
+    "amount": "Amount",
+    "status": "Status",
+    "setupPayouts": "Set up payouts",
+    "setupHint": "Connect your bank details through Stripe to receive your earnings.",
+    "payoutsReady": "Thanks! Stripe is verifying your details. You will receive payouts once that is done.",
+    "payoutsRefresh": "The setup was interrupted. Start it again to finish.",
+    "notProvider": "Only parking owners have a dashboard."
+  },
+  "admin": {
+    "settingsTitle": "Commission and refunds",
+    "commissionRate": "Commission rate (%)",
+    "commissionHelp": "Applies to bookings created from now on. Existing bookings keep their rate.",
+    "refundPolicy": "Refund policy",
+    "policies": {
+      "time_based": "Time based (full 24h before, half 2h before)",
+      "full": "Always refund in full",
+      "none": "Never refund"
     },
-    "vehicleType": {
-      "car": "Car",
-      "motorcycle": "Motorcycle",
-      "van": "Van",
-      "suv": "SUV"
+    "saved": "Saved.",
+    "invalidRate": "Enter a number between 0 and 100.",
+    "last30": "Last 30 days",
+    "platformCommission": "Commission earned",
+    "payoutsTitle": "Provider payouts",
+    "runPayouts": "Run payouts",
+    "runHint": "Pays every provider with earnings in the period. Running the same period twice is safe.",
+    "from": "From",
+    "to": "To",
+    "running": "Running…",
+    "provider": "Provider",
+    "outcome": "Outcome",
+    "outcomes": {
+      "paid": "Paid",
+      "skipped": "Skipped",
+      "failed": "Failed"
     },
-    "availability": {
-      "free_one": "{{count}} spot free",
-      "free_other": "{{count}} spots free",
-      "full": "Full",
-      "closed": "Closed at this time"
+    "filter": "Status",
+    "allStatuses": "All",
+    "payoutStatus": {
+      "Pending": "Pending",
+      "Processing": "Processing",
+      "Paid": "Paid",
+      "Failed": "Failed"
     },
-    "checkout": {
-      "title": "Book",
-      "from": "From",
-      "to": "Until",
-      "plate": "Plate",
-      "vehicleType": "Vehicle type",
-      "payment": "Payment",
-      "paymentNote": "The spot is held for 15 minutes. The booking is confirmed once paid.",
-      "total": "Total",
-      "submit": "Book",
-      "submitting": "Booking…",
-      "invalidPeriod": "The end time must be after the start time."
-    },
-    "ticket": {
-      "title": "Ticket",
-      "reference": "Reference",
-      "period": "Time",
-      "plate": "Plate",
-      "total": "Total",
-      "accessInstructions": "How to get in",
-      "arrivalInstructions": "How to get there",
-      "navigate": "Navigate",
-      "extend": "Extend",
-      "cancel": "Cancel",
-      "expiresIn": "Expires in {{time}}",
-      "startsIn": "Starts in {{time}}",
-      "endsIn": "Ends in {{time}}",
-      "pendingNote": "Pay before the time runs out to keep the spot.",
-      "qrHint": "Show this code at the entrance.",
-      "offline": "Offline. Showing the last saved ticket.",
-      "cancellationReason": "Reason: {{reason}}"
-    },
-    "extend": {
-      "title": "Extend booking",
-      "newEnd": "Ends at",
-      "submit": "Extend"
-    },
-    "cancel": {
-      "title": "Cancel this booking?",
-      "reason": "Reason (optional)",
-      "submit": "Yes, cancel it",
-      "keep": "Keep booking"
-    },
-    "review": {
-      "title": "How was your parking?",
-      "rating": "Rating",
-      "stars_one": "{{count}} star",
-      "stars_other": "{{count}} stars",
-      "comment": "Comment (optional)",
-      "submit": "Send review",
-      "thanks": "Thanks for your review."
-    },
-    "list": {
-      "title": "Bookings",
-      "upcoming": "Upcoming",
-      "past": "Past",
-      "empty": "You have no bookings yet.",
-      "emptyPast": "No past bookings."
-    },
-    "arrivals": {
-      "title": "Today's arrivals",
-      "empty": "No arrivals today.",
-      "checkIn": "Check in",
-      "checkOut": "Check out",
-      "scanTitle": "Scan a ticket",
-      "location": "Parking",
-      "token": "Ticket code",
-      "scanCheckIn": "Check in",
-      "scanCheckOut": "Check out",
-      "done": "{{plate}}: {{status}}"
-    },
-    "ownerReviews": {
-      "title": "Reviews of your parkings",
-      "empty": "No reviews yet.",
-      "reply": "Your reply",
-      "submit": "Send reply",
-      "yourReply": "Your reply: {{reply}}"
-    },
-    "notifications": {
-      "title": "Notifications",
-      "empty": "You have no notifications.",
-      "markRead": "Mark as read",
-      "markAllRead": "Mark all as read",
-      "unread_one": "{{count}} unread notification",
-      "unread_other": "{{count}} unread notifications",
-      "openTicket": "Open ticket",
-      "types": {
-        "booking_confirmed": "Booking confirmed",
-        "booking_cancelled": "Booking cancelled",
-        "booking_extended": "Booking extended",
-        "booking_checked_in": "Checked in",
-        "booking_completed": "Booking completed",
-        "booking_no_show": "Booking marked as no-show",
-        "review_reminder": "How was your parking? Leave a review."
+    "verification": {
+      "title": "Verification queue",
+      "empty": "Nothing to review.",
+      "approve": "Approve",
+      "reject": "Reject",
+      "confirmReject": "Reject request",
+      "notes": "Why is it rejected? (the owner will see this)",
+      "documents": "{{count}} documents",
+      "target": {
+        "provider": "Provider",
+        "lot": "Parking lot"
+      },
+      "status": {
+        "Pending": "Pending",
+        "Approved": "Approved",
+        "Rejected": "Rejected"
       }
     },
-    "favorites": {
-      "title": "Saved parkings",
-      "empty": "You haven't saved any parkings yet.",
-      "save": "Save",
-      "saved": "Saved",
-      "remove": "Remove"
+    "reports": {
+      "title": "Reports",
+      "empty": "No reports here.",
+      "action": "What to do",
+      "resolution": "Resolution note",
+      "submit": "Close report",
+      "resolved": "Resolution",
+      "target": {
+        "lot": "Parking lot",
+        "review": "Review",
+        "user": "User"
+      },
+      "actions": {
+        "Dismiss": "Dismiss (no action)",
+        "Resolve": "Resolve (no further action)",
+        "HideReview": "Hide the review",
+        "SuspendLot": "Suspend the parking lot"
+      },
+      "status": {
+        "Open": "Open",
+        "Reviewing": "Reviewing",
+        "Resolved": "Resolved",
+        "Dismissed": "Dismissed"
+      }
     },
-    "errors": {
-      "validation_failed": "Check the fields and try again.",
-      "booking_not_found": "Booking not found.",
-      "location_not_found": "This parking is not available.",
-      "booking_invalid_period": "The booking time is not valid.",
-      "booking_customer_inactive": "Your account cannot make bookings.",
-      "booking_location_unavailable": "This parking is not taking bookings right now.",
-      "booking_space_mismatch": "Choose a space only for parkings that sell spaces.",
-      "booking_vehicle_not_owned": "This vehicle is not yours.",
-      "booking_vehicle_type_not_allowed": "This parking does not accept this vehicle type.",
-      "booking_outside_opening_hours": "The parking is closed for part of this time.",
-      "booking_space_unavailable": "This space is taken at this time.",
-      "booking_no_capacity": "The parking is full at this time.",
-      "booking_no_rate": "This parking has no price for this time.",
-      "booking_duration_out_of_range": "This booking is too short or too long for this parking.",
-      "booking_not_extendable": "Only confirmed or active bookings can be extended.",
-      "booking_invalid_transition": "The booking changed in the meantime. Refresh the page.",
-      "review_booking_not_eligible": "Only completed bookings can be reviewed.",
-      "review_already_exists": "This booking has already been reviewed.",
-      "ticket_not_found": "This ticket does not exist.",
-      "ticket_wrong_location": "This ticket is for another parking.",
-      "not_location_owner": "Only the owner of this parking can do this.",
-      "notification_not_found": "Notification not found."
+    "audit": {
+      "title": "Audit log",
+      "entity": "Record type",
+      "empty": "No entries.",
+      "actor": "By",
+      "system": "system",
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {{page}} of {{pages}}"
     }
+  },
+  "report": {
+    "button": "Report",
+    "title": "Report a problem",
+    "category": "What is wrong?",
+    "description": "Tell us more",
+    "descriptionPlaceholder": "Describe the problem in a few words.",
+    "submit": "Send report",
+    "sent": "Thank you. Our team will review your report.",
+    "descriptionRequired": "Please describe the problem.",
+    "categories": {
+      "Inaccurate": "Wrong or outdated information",
+      "Safety": "Safety concern",
+      "Fraud": "Fraud or scam",
+      "Inappropriate": "Inappropriate content",
+      "Other": "Something else"
+    }
+  },
+  "auth": {
+    "title": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "signingIn": "Signing in…",
+    "invalid": "Wrong email or password.",
+    "notConfigured": "Sign-in is not set up. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to frontend/.env.",
+    "signedInAs": "Signed in as {{email}}"
   }
 }

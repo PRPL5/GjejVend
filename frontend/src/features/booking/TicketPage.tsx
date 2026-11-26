@@ -1,22 +1,37 @@
 import { QRCodeSVG } from 'qrcode.react'
 import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
-import { Button } from '@/components/Button'
-import { ErrorMessage, Loading, StatusDot } from '@/components/Feedback'
+import { Link, useParams } from 'react-router-dom'
+import { Button, Loading } from '@/components/ui'
+import { ErrorMessage, StatusDot } from '@/components/Feedback'
 import { TextAreaField, TextField } from '@/components/Field'
 import { Sheet } from '@/components/Sheet'
-import { useCancelBooking, useExtendBooking, useTicket, type Ticket } from '@/features/booking/api'
-import { formatDuration, fromLocalInput, mapsLink, statusTones, toLocalInput, useFormat } from '@/features/booking/format'
+import {
+  useCancelBooking,
+  useExtendBooking,
+  useTicket,
+  type Ticket,
+} from '@/features/booking/bookingsApi'
+import {
+  formatDuration,
+  fromLocalInput,
+  mapsLink,
+  statusTones,
+  toLocalInput,
+  useFormat,
+} from '@/features/booking/format'
 import { ReviewForm } from '@/features/booking/ReviewForm'
 import { useNow } from '@/features/booking/useNow'
 
 function countdown(ticket: Ticket, now: number): { key: string; target: number } | null {
   const starts = Date.parse(ticket.startsAt)
   const ends = Date.parse(ticket.endsAt)
-  if (ticket.status === 'pending' && ticket.expiresAt) return { key: 'ticket.expiresIn', target: Date.parse(ticket.expiresAt) }
-  if (ticket.status === 'confirmed' && now < starts) return { key: 'ticket.startsIn', target: starts }
-  if ((ticket.status === 'confirmed' || ticket.status === 'active') && now < ends) return { key: 'ticket.endsIn', target: ends }
+  if (ticket.status === 'Pending' && ticket.expiresAt)
+    return { key: 'ticket.expiresIn', target: Date.parse(ticket.expiresAt) }
+  if (ticket.status === 'Confirmed' && now < starts)
+    return { key: 'ticket.startsIn', target: starts }
+  if ((ticket.status === 'Confirmed' || ticket.status === 'Active') && now < ends)
+    return { key: 'ticket.endsIn', target: ends }
   return null
 }
 
@@ -30,13 +45,17 @@ export function TicketPage() {
   const [reviewed, setReviewed] = useState(false)
 
   if (!ticket.data) {
-    return ticket.isError ? <ErrorMessage error={ticket.error} onRetry={() => void ticket.refetch()} /> : <Loading />
+    return ticket.isError ? (
+      <ErrorMessage error={ticket.error} onRetry={() => void ticket.refetch()} />
+    ) : (
+      <Loading />
+    )
   }
 
   const data = ticket.data
   const timer = countdown(data, now)
-  const canExtend = data.status === 'confirmed' || data.status === 'active'
-  const canCancel = data.status === 'pending' || data.status === 'confirmed'
+  const canExtend = data.status === 'Confirmed' || data.status === 'Active'
+  const canCancel = data.status === 'Pending' || data.status === 'Confirmed'
 
   return (
     <article className="flex flex-col gap-6">
@@ -55,8 +74,16 @@ export function TicketPage() {
             {t(timer.key, { time: formatDuration(timer.target - now) })}
           </p>
         )}
-        {data.status === 'pending' && <p className="text-ink-2">{t('ticket.pendingNote')}</p>}
-        {data.cancellationReason && <p className="text-ink-2">{t('ticket.cancellationReason', { reason: data.cancellationReason })}</p>}
+        {data.status === 'Pending' && (
+          <p className="flex flex-wrap items-center gap-2 text-ink-2">
+            {t('ticket.pendingNote')} <Link to={`/bookings/${data.id}/pay`}>{t('ticket.pay')}</Link>
+          </p>
+        )}
+        {data.cancellationReason && (
+          <p className="text-ink-2">
+            {t('ticket.cancellationReason', { reason: data.cancellationReason })}
+          </p>
+        )}
       </header>
 
       {data.ticketToken && (
@@ -94,7 +121,7 @@ export function TicketPage() {
         </section>
       )}
 
-      {data.status === 'completed' && !data.hasReview && !reviewed && (
+      {data.status === 'Completed' && !data.hasReview && !reviewed && (
         <ReviewForm bookingId={data.id} onDone={() => setReviewed(true)} />
       )}
       {reviewed && <p role="status">{t('review.thanks')}</p>}
@@ -109,12 +136,12 @@ export function TicketPage() {
           {t('ticket.navigate')}
         </a>
         {canExtend && (
-          <Button type="button" onClick={() => setSheet('extend')}>
+          <Button variant="secondary" type="button" onClick={() => setSheet('extend')}>
             {t('ticket.extend')}
           </Button>
         )}
         {canCancel && (
-          <Button type="button" onClick={() => setSheet('cancel')}>
+          <Button variant="secondary" type="button" onClick={() => setSheet('cancel')}>
             {t('ticket.cancel')}
           </Button>
         )}
@@ -133,7 +160,9 @@ export function TicketPage() {
 function ExtendForm({ ticket, onDone }: { ticket: Ticket; onDone: () => void }) {
   const { t } = useTranslation('bookings')
   const extend = useExtendBooking(ticket.id)
-  const [endsAt, setEndsAt] = useState(() => toLocalInput(new Date(Date.parse(ticket.endsAt) + 3_600_000)))
+  const [endsAt, setEndsAt] = useState(() =>
+    toLocalInput(new Date(Date.parse(ticket.endsAt) + 3_600_000)),
+  )
 
   function submit(event: FormEvent) {
     event.preventDefault()
@@ -170,13 +199,18 @@ function CancelForm({ ticket, onDone }: { ticket: Ticket; onDone: () => void }) 
 
   return (
     <form onSubmit={submit} className="flex flex-col gap-4">
-      <TextAreaField label={t('cancel.reason')} value={reason} maxLength={500} onChange={(e) => setReason(e.target.value)} />
+      <TextAreaField
+        label={t('cancel.reason')}
+        value={reason}
+        maxLength={500}
+        onChange={(e) => setReason(e.target.value)}
+      />
       {cancel.isError && <ErrorMessage error={cancel.error} />}
       <div className="flex flex-col gap-2">
         <Button type="submit" variant="danger" loading={cancel.isPending}>
           {t('cancel.submit')}
         </Button>
-        <Button type="button" onClick={onDone}>
+        <Button variant="secondary" type="button" onClick={onDone}>
           {t('cancel.keep')}
         </Button>
       </div>

@@ -1,7 +1,5 @@
 using FluentValidation;
 using GjejVend.Application.Bookings.Events;
-using GjejVend.Application.Common;
-using GjejVend.Application.Listings;
 using GjejVend.Domain.Common;
 using GjejVend.Infrastructure.Bookings;
 using GjejVend.Infrastructure.Persistence;
@@ -15,8 +13,7 @@ public interface IBookingConfirmation
 
 public sealed class BookingService(
     IBookingRepository bookings,
-    IAvailabilityService availability,
-    IPricingQuery pricing,
+    IBookingAvailabilityQueries availability,
     BookingEventPublisher events,
     ICurrentUser currentUser,
     TimeProvider time,
@@ -32,8 +29,8 @@ public sealed class BookingService(
         var (startsAt, endsAt) = (query.StartsAt.UtcDateTime, query.EndsAt.UtcDateTime);
 
         var isOpen = await availability.IsOpenAsync(location.Id, startsAt, endsAt, cancellationToken);
-        var freeCapacity = await availability.GetFreeCapacityAsync(location.Id, startsAt, endsAt, cancellationToken);
-        var quote = await pricing.QuoteAsync(location.Id, null, startsAt, endsAt, cancellationToken);
+        var freeCapacity = await availability.FreeCapacityAsync(location.Id, startsAt, endsAt, cancellationToken);
+        var quote = await availability.QuoteAsync(location.Id, startsAt, endsAt, cancellationToken);
         var vehicle = await bookings.FindDefaultVehicleAsync(currentUser.RequireId(), cancellationToken);
 
         return new CheckoutPreview(

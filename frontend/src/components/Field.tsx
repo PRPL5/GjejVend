@@ -5,7 +5,11 @@ const control =
 
 type Labelled = { label: string }
 
-export function TextField({ label, className = '', ...props }: Labelled & InputHTMLAttributes<HTMLInputElement>) {
+export function TextField({
+  label,
+  className = '',
+  ...props
+}: Labelled & InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label className="flex flex-col gap-1 font-medium">
       {label}
@@ -14,7 +18,11 @@ export function TextField({ label, className = '', ...props }: Labelled & InputH
   )
 }
 
-export function SelectField({ label, children, ...props }: Labelled & SelectHTMLAttributes<HTMLSelectElement>) {
+export function SelectField({
+  label,
+  children,
+  ...props
+}: Labelled & SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <label className="flex flex-col gap-1 font-medium">
       {label}
@@ -25,7 +33,10 @@ export function SelectField({ label, children, ...props }: Labelled & SelectHTML
   )
 }
 
-export function TextAreaField({ label, ...props }: Labelled & TextareaHTMLAttributes<HTMLTextAreaElement>) {
+export function TextAreaField({
+  label,
+  ...props
+}: Labelled & TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <label className="flex flex-col gap-1 font-medium">
       {label}

@@ -1,6 +1,5 @@
 using FluentValidation;
 using GjejVend.Application.Bookings.Events;
-using GjejVend.Application.Common;
 using GjejVend.Domain.Bookings;
 using GjejVend.Domain.Common;
 using GjejVend.Infrastructure.Bookings;

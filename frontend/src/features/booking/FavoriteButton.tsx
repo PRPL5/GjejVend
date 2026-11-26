@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import { Button } from '@/components/Button'
-import { useFavorites, useToggleFavorite } from '@/features/booking/api'
+import { Button } from '@/components/ui'
+import { useFavorites, useToggleFavorite } from '@/features/booking/bookingsApi'
 
 export function FavoriteButton({ locationId }: { locationId: string }) {
   const { t } = useTranslation('bookings')
@@ -10,6 +10,7 @@ export function FavoriteButton({ locationId }: { locationId: string }) {
 
   return (
     <Button
+      variant="secondary"
       type="button"
       aria-pressed={saved}
       loading={toggle.isPending}

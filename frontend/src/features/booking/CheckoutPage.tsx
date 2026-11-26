@@ -1,14 +1,18 @@
 import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { Button } from '@/components/Button'
-import { ErrorMessage, Loading, StatusDot } from '@/components/Feedback'
+import { Button, Loading } from '@/components/ui'
+import { ErrorMessage, StatusDot } from '@/components/Feedback'
 import { SelectField, TextField } from '@/components/Field'
-import { useCheckoutPreview, useCreateBooking, type VehicleType } from '@/features/booking/api'
+import {
+  useCheckoutPreview,
+  useCreateBooking,
+  type VehicleType,
+} from '@/features/booking/bookingsApi'
 import { FavoriteButton } from '@/features/booking/FavoriteButton'
 import { fromLocalInput, toLocalInput, useFormat } from '@/features/booking/format'
 
-const vehicleTypes: VehicleType[] = ['car', 'motorcycle', 'van', 'suv']
+const vehicleTypes: VehicleType[] = ['Car', 'Motorcycle', 'Van', 'Suv']
 
 function defaultStart(): Date {
   const start = new Date(Date.now() + 15 * 60_000)
@@ -44,7 +48,7 @@ export function CheckoutPage() {
   const create = useCreateBooking()
   const defaultVehicle = preview.data?.defaultVehicle
   const plateValue = plate ?? defaultVehicle?.plate ?? ''
-  const vehicleTypeValue = vehicleType ?? defaultVehicle?.vehicleType ?? 'car'
+  const vehicleTypeValue = vehicleType ?? defaultVehicle?.vehicleType ?? 'Car'
 
   const free = preview.data?.freeCapacity ?? 0
   const bookable = preview.isSuccess && preview.data.isOpen && free > 0
@@ -60,7 +64,7 @@ export function CheckoutPage() {
         vehiclePlate: plateValue.trim(),
         vehicleType: vehicleTypeValue,
       },
-      { onSuccess: (ticket) => navigate(`/bookings/${ticket.id}`) },
+      { onSuccess: (ticket) => navigate(`/bookings/${ticket.id}/pay`) },
     )
   }
 
@@ -68,7 +72,9 @@ export function CheckoutPage() {
     <form onSubmit={submit} className="flex flex-col gap-6 pb-28">
       <header className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
-          <h1 className="font-display text-3xl font-bold">{preview.data?.locationName ?? t('checkout.title')}</h1>
+          <h1 className="font-display text-3xl font-bold">
+            {preview.data?.locationName ?? t('checkout.title')}
+          </h1>
           {preview.data && <p className="text-ink-2">{preview.data.addressLine}</p>}
         </div>
         <FavoriteButton locationId={locationId} />
@@ -95,7 +101,9 @@ export function CheckoutPage() {
       </section>
 
       {preview.isLoading && <Loading />}
-      {preview.isError && <ErrorMessage error={preview.error} onRetry={() => void preview.refetch()} />}
+      {preview.isError && (
+        <ErrorMessage error={preview.error} onRetry={() => void preview.refetch()} />
+      )}
       {preview.isSuccess && (
         <p>
           {!preview.data.isOpen ? (
@@ -144,10 +152,18 @@ export function CheckoutPage() {
           <p className="flex flex-col">
             <span className="text-sm text-ink-2">{t('checkout.total')}</span>
             <span className="font-display text-2xl font-bold">
-              {preview.isSuccess ? format.money(preview.data.totalAmount, preview.data.currency) : '–'}
+              {preview.isSuccess
+                ? format.money(preview.data.totalAmount, preview.data.currency)
+                : '–'}
             </span>
           </p>
-          <Button type="submit" variant="primary" loading={create.isPending} disabled={!bookable} className="min-w-40">
+          <Button
+            type="submit"
+            variant="primary"
+            loading={create.isPending}
+            disabled={!bookable}
+            className="min-w-40"
+          >
             {create.isPending ? t('checkout.submitting') : t('checkout.submit')}
           </Button>
         </div>

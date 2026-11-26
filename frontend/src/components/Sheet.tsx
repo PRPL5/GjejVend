@@ -26,7 +26,7 @@ export function Sheet({ open, title, onClose, children }: SheetProps) {
           <div className="flex items-start justify-between gap-4">
             <h2 className="font-display text-xl font-bold">{title}</h2>
             <button type="button" onClick={onClose} className="min-h-11 min-w-11 underline">
-              {t('close')}
+              {t('common.close')}
             </button>
           </div>
           {children}
