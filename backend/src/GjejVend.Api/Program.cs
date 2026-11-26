@@ -1,4 +1,9 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using GjejVend.Api.Authentication;
+using GjejVend.Api.ErrorHandling;
+using GjejVend.Api.OpenApi;
+using GjejVend.Api.Workers;
 using GjejVend.Application;
 
 DotNetEnv.Env.TraversePath().NoClobber().Load();
@@ -15,16 +20,30 @@ var supabaseUrl = builder.Configuration["Supabase:Url"]
 
 builder.Services.AddApplication(connectionString);
 builder.Services.AddSupabaseAuthentication(supabaseUrl);
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower)));
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<ProblemExceptionHandler>();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SupportNonNullableReferenceTypes();
+    options.SchemaFilter<RequiredPropertiesSchemaFilter>();
+});
 builder.Services.AddHealthChecks();
+
+if (builder.Configuration.GetValue("Bookings:CloseOverdue", true))
+{
+    builder.Services.AddHostedService<BookingLifecycleWorker>();
+}
 
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
 builder.Services.AddCors(o => o.AddDefaultPolicy(p =>
     p.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod()));
 
 var app = builder.Build();
+
+app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {
